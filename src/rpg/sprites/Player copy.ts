@@ -1,12 +1,12 @@
-import Phaser from "phaser";
+import Phaser from 'phaser';
 
-import { key } from "../data";
+import { key } from '../data';
 
 enum Animation {
-  Left = "Left",
-  Right = "Right",
-  Up = "Up",
-  Down = "Down",
+  Left = 'Left',
+  Right = 'Right',
+  Up = 'Up',
+  Down = 'Down',
 }
 
 const Velocity = {
@@ -22,8 +22,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     scene: Phaser.Scene,
     x: number,
     y: number,
-    texture = key.image.detective,
-    frame = 0,
+    texture = key.atlas.player,
+    frame = 'misa-front',
   ) {
     super(scene, x, y, texture, frame);
 
@@ -35,7 +35,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     // The image has a bit of whitespace so use setSize and
     // setOffset to control the size of the player's body
-    this.setSize(32, 48).setOffset(16, 14);
+    this.setSize(32, 42).setOffset(0, 22);
 
     // Collide the sprite body with the world boundary
     this.setCollideWorldBounds(true);
@@ -51,27 +51,63 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.createAnimations();
   }
 
-  private createAnimation(animationKey: Animation, row: number) {
+  private createAnimations() {
+    // Create left animation
     this.anims.create({
-      key: animationKey,
-      frames: this.anims.generateFrameNumbers(key.image.detective, {
-        // 13 is hardcoded from LPC spritesheets
-        start: 13 * row,
-        end: 13 * row + 8,
+      key: Animation.Left,
+      frames: this.anims.generateFrameNames(key.atlas.player, {
+        prefix: 'misa-left-walk.',
+        start: 0,
+        end: 3,
+        zeroPad: 3,
       }),
-      frameRate: 9,
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    // Create right animation
+    this.anims.create({
+      key: Animation.Right,
+      frames: this.anims.generateFrameNames(key.atlas.player, {
+        prefix: 'misa-right-walk.',
+        start: 0,
+        end: 3,
+        zeroPad: 3,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    // Create up animation
+    this.anims.create({
+      key: Animation.Up,
+      frames: this.anims.generateFrameNames(key.atlas.player, {
+        prefix: 'misa-back-walk.',
+        start: 0,
+        end: 3,
+        zeroPad: 3,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    // Create down animation
+    this.anims.create({
+      key: Animation.Down,
+      frames: this.anims.generateFrameNames(key.atlas.player, {
+        prefix: 'misa-front-walk.',
+        start: 0,
+        end: 3,
+        zeroPad: 3,
+      }),
+      frameRate: 10,
       repeat: -1,
     });
   }
-  private createAnimations() {
-    // row to directionmap hardcoded from LPC spritesheets
-    this.createAnimation(Animation.Up, 0);
-    this.createAnimation(Animation.Left, 1);
-    this.createAnimation(Animation.Down, 2);
-    this.createAnimation(Animation.Right, 3);
-  }
 
   update() {
+    const prevVelocity = this.body.velocity.clone();
+
     // Stop any previous movement from the last frame
     this.body.setVelocity(0);
 
@@ -119,10 +155,23 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         break;
 
       default:
-        const frame = this.anims.currentAnim?.frames[0].frame;
         this.anims.stop();
 
-        this.setFrame(frame!);
+        // If we were moving, pick an idle frame to use
+        switch (true) {
+          case prevVelocity.x < 0:
+            this.setTexture(key.atlas.player, 'misa-left');
+            break;
+          case prevVelocity.x > 0:
+            this.setTexture(key.atlas.player, 'misa-right');
+            break;
+          case prevVelocity.y < 0:
+            this.setTexture(key.atlas.player, 'misa-back');
+            break;
+          case prevVelocity.y > 0:
+            this.setTexture(key.atlas.player, 'misa-front');
+            break;
+        }
     }
   }
 }

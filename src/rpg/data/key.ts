@@ -1,19 +1,20 @@
 const atlas = {
-  player: 'player',
+  player: "player",
 } as const;
 
 const image = {
-  spaceman: 'spaceman',
-  tuxemon: 'tuxemon',
+  spaceman: "spaceman",
+  tuxemon: "tuxemon",
+  detective: "detective",
 } as const;
 
 const scene = {
-  boot: 'boot',
-  main: 'main',
+  boot: "boot",
+  main: "main",
 } as const;
 
 const tilemap = {
-  tuxemon: 'tuxemon',
+  tuxemon: "tuxemon",
 } as const;
 
 export const key = {
