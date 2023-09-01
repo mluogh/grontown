@@ -1,38 +1,34 @@
-import * as React from "react"
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+import { ChakraProvider, Box, theme } from "@chakra-ui/react";
+
+import Phaser from "phaser";
+import scenes from "rpg/scenes";
+import { isDevelopment, isProduction } from "rpg/utils";
+
+const game = new Phaser.Game({
+  width: 800, // 1024
+  height: 600, // 768
+  parent: "phaser-container",
+  title: "Phaser RPG",
+  url: process.env.URL,
+  version: process.env.VERSION,
+  scene: scenes,
+  physics: {
+    default: "arcade",
+    arcade: {
+      debug: isDevelopment,
+    },
+  },
+  disableContextMenu: isProduction,
+  backgroundColor: "#000",
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+  },
+  pixelArt: true,
+});
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
-    </Box>
+    <div id="phaser-container"></div>
   </ChakraProvider>
-)
+);
