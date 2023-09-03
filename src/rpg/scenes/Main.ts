@@ -73,13 +73,12 @@ export default class Main extends Phaser.Scene {
 
     // Object layers in Tiled let you embed extra info into a map like a spawn point or custom collision shapes.
     // In the tmx file, there's an object layer with a point named 'Spawn Point'.
-    // const spawnPoint = map.findObject(
-    //   "Objects",
-    //   object => object.name === "Spawn Point",
-    // )!;
+    const spawnPoint = map.findObject(
+      "Misc",
+      object => object.name === "Spawn Point",
+    )!;
 
-    // this.player = new Player(this, spawnPoint.x ?? 0, spawnPoint.y ?? 0);
-    this.player = new Player(this, 0, 0);
+    this.player = new Player(this, spawnPoint.x!, spawnPoint.y!);
 
     // Watch the player and worldLayer for collisions
     this.physics.add.collider(this.player, collisionGroup);

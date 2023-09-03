@@ -49,6 +49,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Create sprite animations
     this.createAnimations();
+
+    this.play(Animation.Right);
   }
 
   private createAnimation(animationKey: Animation, row: number) {
