@@ -1,0 +1,137 @@
+[LPC] Victorian Town Decorations by bluecarrot16, Casper Nilsson, Lanea Zimmerman (Sharm), William Thompson, mold, AntumDeluge, Curt, Daniel Eddeland (daneeklu), caeles, George Bailey, Jetrel, Yar, Guido Bos, Ivan Voirol (Silver IV), Stephen Challener (Redshrike), the Open Surge team, Arthur Carvalho, Guilherme Vieira (n2liquid), NaRNeRZz, Diarandor, Armando Montero (ArMM1998), Tuomo Untinen (Reemax), Buch.
+
+License: CC-BY-SA 4.0
+
+## Based on: 
+
+LPC C.Nilsson
+Casper Nilsson
+CC-BY-SA 3.0 / GPL 3.0
+https://opengameart.org/content/lpc-cnilsson
+
+LPC Base Assets
+Lanea Zimmerman (AKA Sharm)
+CC-BY 3.0 / GPL 3.0
+https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+
+[LPC] Signposts, graves, line cloths and scare crow
+Reemax
+CC-BY-SA 3.0 / GPL 3.0
+https://opengameart.org/content/lpc-signposts-graves-line-cloths-and-scare-crow
+
+LPC: Modified base tiles
+Lanea Zimmerman (Sharm), William Thompson
+CC-BY 3.0 / GPL 3.0 / OGA-BY 3.0
+https://opengameart.org/content/lpc-modified-base-tiles
+
+[LPC] Misc
+Lanea Zimmerman, William Thompson
+https://opengameart.org/content/lpc-misc
+
+LPC Lamp Posts Rework
+Curt, Lanea Zimmerman (Sharm), William.Thompsonj, & mold, reworked by AntumDeluge
+CC-BY 3.0 /GPL 3.0 / GPL 2.0 / OGA-BY 3.0
+https://opengameart.org/content/lpc-lamp-posts-rework
+
+[LPC] Farming tilesets, magic animations and UI elements
+Daniel Eddeland (daneeklu)
+CC-BY-SA 3.0 / GPL 3.0
+https://opengameart.org/content/lpc-farming-tilesets-magic-animations-and-ui-elements
+
+[LPC] Adobe Building Set
+Lanea Zimmerman (Sharm), William Thompson
+CC-BY 3.0 / GPL 3.0 / GPL 2.0 / OGA-BY 3.0
+https://opengameart.org/content/lpc-adobe-building-set
+
+[LPC] caeles' art
+caeles
+CC-BY-SA 3.0 / GPL 3.0
+https://opengameart.org/content/lpc-caeles-art
+
+[LPC] Arabic Elements
+Lanea Zimmerman, William Thompson
+CC-BY 3.0 / GPL 3.0 / GPL 2.0 / OGA-BY 3.0
+https://opengameart.org/content/lpc-arabic-elements
+
+[LPC] Water Fountain
+Curt, Sharm, William.Thompsonj
+CC-BY 3.0
+https://opengameart.org/content/lpc-water-fountain
+
+LPC: Interior Castle Tiles
+Lanea Zimmerman
+CC-BY 3.0 / GPL 3.0 / GPL 2.0 / OGA-BY 3.0
+https://opengameart.org/content/lpc-interior-castle-tiles
+
+16x16 Game Assets
+George Bailey
+CC-BY 4.0
+https://opengameart.org/content/16x16-game-assets
+
+RPG item set
+Jetrel
+CC0
+https://opengameart.org/content/rpg-item-set
+
+Isometric 64x64 Outside Tileset
+Yar
+CC-BY 3.0
+https://opengameart.org/content/isometric-64x64-outside-tileset
+
+[LPC] Guido Bos entries cut up
+Guido Bos
+CC-BY-SA 3.0 / GPL 3.0
+https://opengameart.org/content/lpc-guido-bos-entries-cut-up
+
+Basic map 32x32 by Silver IV
+Ivan Voirol (Silver IV)
+CC-BY 3.0 / GPL 3.0 / GPL 2.0
+https://opengameart.org/content/basic-map-32x32-by-silver-iv
+
+32x32 (and 16x16) RPG Tiles--Forest and some Interior Tiles
+Stephen Challener (Redshrike) and the Open Surge team (http://opensnc.sourceforge.net)commissioned by Gaurav Munjal
+CC-BY 3.0
+https://opengameart.org/content/32x32-and-16x16-rpg-tiles-forest-and-some-interior-tiles
+
+Exterior 32x32 Town tileset
+Arthur Carvalho; Copyright Guilherme Vieira (n2liquid), https://fb.com/sonettocommons
+CC-BY-SA 4.0
+https://opengameart.org/content/town-tileset-exterior-32x32
+
+
+
+
+Tileset and Characters - Unfinished
+NaRNeRZz
+CC0
+https://opengameart.org/content/tileset-and-characters-unfinished
+
+Solarus Fountain
+Diarandor for Children of Solarus (https://github.com/solarus-games/children-of-solarus), a game for the Solarus game engine (http://www.solarus-games.org/).
+CC-BY-SA 4.0
+https://opengameart.org/content/solarus-fountain
+
+Zelda-like tilesets and sprites
+Armando Montero (ArMM1998)
+CC0
+https://opengameart.org/content/zelda-like-tilesets-and-sprites
+
+[LPC] Dungeon Elements
+Lanea Zimmerman (Sharm), William Thompson
+CC-BY 4.0 / CC-BY 3.0 / GPL 3.0 / GPL 2.0 / OGA-BY 3.0
+https://opengameart.org/content/lpc-dungeon-elements
+
+[LPC] Guido Bos entries cut up
+Guido Bos
+CC-BY-SA 3.0 / GPL 3.0
+https://opengameart.org/content/lpc-guido-bos-entries-cut-up
+
+[LPC] Hanging signs
+Reemax
+CC-BY-SA 3.0 / GPL 3.0
+https://opengameart.org/content/lpc-hanging-signs
+
+Tuxemon tileset
+Buch
+CC-BY-SA 3.0
+https://opengameart.org/content/tuxemon-tileset

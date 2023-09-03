@@ -27,10 +27,14 @@ export default class Boot extends Phaser.Scene {
       key.tilemap.tuxemon,
       "assets/tilemaps/tuxemon-town.json",
     );
-    this.load.atlas(
-      key.atlas.player,
-      "assets/atlas/atlas.png",
-      "assets/atlas/atlas.json",
+
+    for (const tileset of Object.values(key.tileset)) {
+      this.load.image(tileset, `assets/tilesets/${tileset}.png`);
+    }
+
+    this.load.tilemapTiledJSON(
+      key.tilemap.town,
+      "assets/tilemaps/grontown_embedded.json",
     );
   }
 

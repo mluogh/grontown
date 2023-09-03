@@ -10,8 +10,8 @@ enum Animation {
 }
 
 const Velocity = {
-  Horizontal: 175,
-  Vertical: 175,
+  Horizontal: 250,
+  Vertical: 250,
 } as const;
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
@@ -59,7 +59,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         start: 13 * row,
         end: 13 * row + 8,
       }),
-      frameRate: 9,
+      frameRate: 16,
       repeat: -1,
     });
   }
@@ -97,8 +97,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         break;
     }
 
+    let speed = Velocity.Horizontal;
+    if (this.cursors.shift.isDown) {
+      speed *= 2;
+    }
+
     // Normalize and scale the velocity so that player can't move faster along a diagonal
-    this.body.velocity.normalize().scale(Velocity.Horizontal);
+    this.body.velocity.normalize().scale(speed);
 
     // Update the animation last and give left/right animations precedence over up/down animations
     switch (true) {

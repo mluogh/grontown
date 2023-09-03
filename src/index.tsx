@@ -12,8 +12,8 @@ if (!container) throw new Error("Failed to find the root element");
 const root = ReactDOM.createRoot(container);
 
 new Phaser.Game({
-  width: 800, // 1024
-  height: 600, // 768
+  width: 1024, // 1024
+  height: 768, // 768
   parent: "phaser-container",
   title: "Phaser RPG",
   url: process.env.URL,
@@ -22,7 +22,7 @@ new Phaser.Game({
   physics: {
     default: "arcade",
     arcade: {
-      debug: isDevelopment,
+      debug: true,
     },
   },
   disableContextMenu: isProduction,
