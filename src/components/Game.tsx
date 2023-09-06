@@ -1,16 +1,22 @@
-import { AspectRatio, Box, HStack } from "@chakra-ui/react";
-import ChatModal from "./ChatModal";
-import { EastworldClient } from "eastworld-client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import Phaser from "phaser";
 import scenes from "rpg/scenes";
 import { isDevelopment, isProduction } from "rpg/utils";
+import { Box } from "@chakra-ui/react";
 
 export const Game = () => {
-  console.log("Game rendered");
+  const phaserContainer = useRef<HTMLDivElement>(null);
+  const calculateWidth = (): number => {
+    const containerHeight = phaserContainer.current!.clientHeight;
+    const containerWidth = phaserContainer.current!.clientWidth;
+    // Scale the game such that the aspect ratio is the same as the container,
+    // and then depend on Phaser.Scale.FIT to scale the game to fit the container.
+    return containerWidth / (containerHeight / 768);
+  };
+
   useEffect(() => {
     const game = new Phaser.Game({
-      width: 1024, // 1024
+      width: calculateWidth(),
       height: 768, // 768
       parent: "phaser-container",
       title: "Phaser RPG",
@@ -32,15 +38,24 @@ export const Game = () => {
       pixelArt: true,
     });
 
+    const handleResize = () => {
+      game.scale.setGameSize(calculateWidth(), 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
     return () => {
       // Destroy the game instance when the component is unmounted
       game.destroy(true);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   return (
-    // <AspectRatio ratio={4 / 3} width={"100%"} maxH={"100%"}>
-    <div id="phaser-container" style={{ width: "100%", height: "100%" }}></div>
-    // </AspectRatio>
+    <Box
+      ref={phaserContainer}
+      id="phaser-container"
+      style={{ width: "100%", height: "100%" }}
+    ></Box>
   );
 };

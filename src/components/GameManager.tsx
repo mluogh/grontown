@@ -47,8 +47,13 @@ export const GameManager = () => {
                 <Game />
               </Center>
             </Box>
-            <Flex width={"9%"} height={"100%"} alignItems={"center"}>
-              <VStack width={"100%"}>
+            <Flex
+              width={"10%"}
+              height={"100%"}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              <VStack width={"90%"} gap={5}>
                 <Box
                   as="button"
                   width={"100%"}
