@@ -1,6 +1,7 @@
 import { Textures, Scene } from "phaser";
 
 import { key } from "../data";
+import characters from "rpg/data/characters";
 
 export default class Boot extends Phaser.Scene {
   constructor() {
@@ -8,21 +9,30 @@ export default class Boot extends Phaser.Scene {
   }
 
   preload() {
-    this.load.spritesheet(key.image.spaceman, "assets/sprites/spaceman.png", {
-      frameWidth: 16,
-      frameHeight: 16,
-    });
-    this.load.spritesheet(key.image.detective, "assets/sprites/detective.png", {
-      frameWidth: 64,
-      frameHeight: 64,
-      startFrame: 104,
-      endFrame: 155,
-    });
-
-    this.load.image(
-      key.image.tuxemon,
-      "assets/tilesets/tuxemon-sample-32px-extruded.png",
+    this.load.spritesheet(
+      characters.detective.sprite,
+      "assets/sprites/detective.png",
+      {
+        frameWidth: 64,
+        frameHeight: 64,
+        startFrame: 104,
+        endFrame: 155,
+      },
     );
+
+    for (const [character, value] of Object.entries(characters)) {
+      if (character !== "detective") {
+        this.load.spritesheet(
+          value.sprite,
+          `assets/sprites/${value.sprite}.png`,
+          {
+            frameWidth: 64,
+            frameHeight: 64,
+          },
+        );
+      }
+    }
+
     this.load.tilemapTiledJSON(
       key.tilemap.tuxemon,
       "assets/tilemaps/tuxemon-town.json",

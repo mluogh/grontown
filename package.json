@@ -13,8 +13,10 @@
     "@types/node": "^12.20.55",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
+    "axios": "^1.5.0",
     "framer-motion": "^6.5.1",
     "phaser": "^3.60.0",
+    "pubsub-js": "^1.9.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^3.11.0",
@@ -26,7 +28,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "generate-eastworld": "openapi --input http://127.0.0.1:8000/openapi.json --output ./src/eastworld-client --client axios --name EastworldClient"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,5 +45,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/pubsub-js": "^1.8.3",
+    "openapi-typescript-codegen": "^0.25.0"
   }
 }

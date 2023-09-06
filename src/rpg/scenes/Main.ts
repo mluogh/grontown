@@ -3,30 +3,31 @@ import Phaser from "phaser";
 import { key } from "../data";
 import { Player } from "../sprites";
 import { isProduction } from "../utils";
+import { Npc } from "rpg/sprites/Npc";
+import topics from "rpg/data/topics";
+import characters from "rpg/data/characters";
 
 export default class Main extends Phaser.Scene {
   private player!: Player;
-  private isDebug = false;
+  private npcs: Npc[] = [];
 
   constructor() {
     super(key.scene.main);
   }
 
   create() {
+    const { map, collisionGroup } = this.createMap();
+    this.createCharacters(map, collisionGroup);
+    this.setupPubSub();
+
+    this.renderDebug();
+  }
+
+  private createMap(): {
+    map: Phaser.Tilemaps.Tilemap;
+    collisionGroup: Phaser.Physics.Arcade.StaticGroup;
+  } {
     const map = this.make.tilemap({ key: key.tilemap.town });
-
-    // // Parameters are the name you gave the tileset in Tiled and
-    // // the key of the tileset image in Phaser's cache (name used in preload)
-    // const tileset = map.addTilesetImage(
-    //   "tuxemon-sample-32px-extruded",
-    //   key.image.tuxemon,
-    // )!;
-
-    // // Parameters: layer name (or index) from Tiled, tileset, x, y
-    // map.createLayer("Below Player", tileset, 0, 0);
-    // const worldLayer = map.createLayer("World", tileset, 0, 0)!;
-    // const aboveLayer = map.createLayer("Above Player", tileset, 0, 0)!;
-
     const tilesets = [];
 
     for (const tileset of Object.values(key.tileset)) {
@@ -48,7 +49,6 @@ export default class Main extends Phaser.Scene {
     const collisionGroup = this.physics.add.staticGroup();
 
     objects.forEach(object => {
-      console.log(object);
       collisionGroup
         .create(
           object.x! + object.width! / 2,
@@ -60,33 +60,60 @@ export default class Main extends Phaser.Scene {
         .setActive(true)
         .setImmovable(true);
     });
-    // const collisionLayer = map.createFromObjects("Collision", tilesets)!;
 
-    // collisionLayer.setCollisionByProperty({ collides: true });
     this.physics.world.bounds.width = worldLayer.width;
     this.physics.world.bounds.height = worldLayer.height;
+    // Set the bounds of the camera
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-    // By default, everything gets depth sorted on the screen in the order we created things.
-    // We want the "Above Player" layer to sit on top of the player, so we explicitly give it a depth.
-    // Higher depths will sit on top of lower depth objects.
-    // aboveLayer.setDepth(10);
+    return { map, collisionGroup };
+  }
 
-    // Object layers in Tiled let you embed extra info into a map like a spawn point or custom collision shapes.
-    // In the tmx file, there's an object layer with a point named 'Spawn Point'.
+  private createCharacters(
+    map: Phaser.Tilemaps.Tilemap,
+    collisionGroup: Phaser.Physics.Arcade.StaticGroup,
+  ) {
     const spawnPoint = map.findObject(
       "Misc",
       object => object.name === "Spawn Point",
     )!;
 
     this.player = new Player(this, spawnPoint.x!, spawnPoint.y!);
+    for (const [character, value] of Object.entries(characters)) {
+      if (character === "detective") {
+        continue;
+      }
+      this.npcs.push(
+        new Npc(
+          value.eastworldId,
+          this,
+          spawnPoint.x!,
+          spawnPoint.y!,
+          value.sprite,
+        ),
+      );
+      collisionGroup.add(this.npcs[this.npcs.length - 1]);
+      this.physics.add.collider(this.player, this.npcs[this.npcs.length - 1]);
+    }
 
     // Watch the player and worldLayer for collisions
     this.physics.add.collider(this.player, collisionGroup);
+    this.player.setUpSensingNpcs(this.npcs);
+  }
 
-    // Set the bounds of the camera
-    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
-    // this.renderDebug(collisionGroup);
+  private setupPubSub() {
+    PubSub.subscribe(topics.enterChat, () => {
+      if (this.input.keyboard) {
+        this.input.keyboard.enabled = false;
+        this.input.keyboard.disableGlobalCapture();
+      }
+    });
+    PubSub.subscribe(topics.leaveChat, () => {
+      if (this.input.keyboard) {
+        this.input.keyboard.enabled = true;
+        this.input.keyboard.enableGlobalCapture();
+      }
+    });
   }
 
   /**
@@ -94,23 +121,13 @@ export default class Main extends Phaser.Scene {
    *
    * @param tilemapLayer - Tilemap layer.
    */
-  private renderDebug(tilemapLayer: Phaser.Tilemaps.TilemapLayer) {
+  private renderDebug() {
     if (isProduction) {
       return;
     }
-
-    const graphics = this.add.graphics().setAlpha(0).setDepth(20);
-
-    // Create worldLayer collision graphic above the player, but below the help text
-    tilemapLayer.renderDebug(graphics, {
-      tileColor: null, // Color of non-colliding tiles
-      collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-      faceColor: new Phaser.Display.Color(40, 39, 37, 255), // Color of colliding face edges
-    });
-
     this.input.keyboard!.on("keydown-D", () => {
-      this.isDebug = !this.isDebug;
-      graphics.setAlpha(this.isDebug ? 0.75 : 0);
+      this.physics.world.debugGraphic.visible =
+        !this.physics.world.debugGraphic.visible;
     });
   }
 

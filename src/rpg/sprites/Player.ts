@@ -1,6 +1,9 @@
 import Phaser from "phaser";
 
-import { key } from "../data";
+import { Npc } from "./Npc";
+import PubSub from "pubsub-js";
+import topics from "rpg/data/topics";
+import characters from "rpg/data/characters";
 
 enum Animation {
   Left = "Left",
@@ -16,16 +19,21 @@ const Velocity = {
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   body!: Phaser.Physics.Arcade.Body;
+  sensor: Phaser.Physics.Arcade.Sprite;
+  // An NPC that is close enough to speak to.
+  closeNpc: Npc | null = null;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+  speakText: Phaser.GameObjects.Text;
 
   constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
-    texture = key.image.detective,
+    texture = characters.detective.sprite,
     frame = 0,
   ) {
     super(scene, x, y, texture, frame);
+    this.setDepth(2);
 
     // Add the sprite to the scene
     scene.add.existing(this);
@@ -36,6 +44,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // The image has a bit of whitespace so use setSize and
     // setOffset to control the size of the player's body
     this.setSize(32, 48).setOffset(16, 14);
+    this.sensor = scene.physics.add.sprite(this.x, this.y, "");
+    this.sensor.setSize(72, 96);
+    this.sensor.setVisible(false);
 
     // Collide the sprite body with the world boundary
     this.setCollideWorldBounds(true);
@@ -51,12 +62,35 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.createAnimations();
 
     this.play(Animation.Right);
+
+    this.speakText = this.scene.add.text(0, 0, "[Space]", {
+      align: "center",
+      fontSize: "16px",
+    });
+    this.speakText.setAlpha(0).setDepth(100);
+  }
+
+  public setUpSensingNpcs(npcs: Npc[]) {
+    for (const npc of npcs) {
+      this.scene.physics.add.collider(this.sensor, npc, (player, object) => {
+        const npc = object as Npc;
+        if (this.closeNpc !== npc) {
+          this.closeNpc = npc as Npc;
+          this.speakText.setAlpha(1);
+          this.speakText.setPosition(
+            npc.x - npc.width / 2,
+            npc.y - npc.height / 2 - 10,
+          );
+        }
+        this.closeNpc = npc as Npc;
+      });
+    }
   }
 
   private createAnimation(animationKey: Animation, row: number) {
     this.anims.create({
       key: animationKey,
-      frames: this.anims.generateFrameNumbers(key.image.detective, {
+      frames: this.anims.generateFrameNumbers(characters.detective.sprite, {
         // 13 is hardcoded from LPC spritesheets
         start: 13 * row,
         end: 13 * row + 8,
@@ -76,6 +110,21 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   update() {
     // Stop any previous movement from the last frame
     this.body.setVelocity(0);
+    this.sensor.x = this.x;
+    this.sensor.y = this.y;
+
+    if (
+      !this.closeNpc ||
+      !this.scene.physics.overlap(this.sensor, this.closeNpc)
+    ) {
+      this.closeNpc = null;
+      this.speakText.setAlpha(0);
+    }
+    if (this.cursors.space.isDown && this.closeNpc) {
+      PubSub.publish(topics.enterChat, this.closeNpc.eastworldId);
+      // This needs to be reset or isDown gets stuck when we disable keyboard input later on
+      this.cursors.space.reset();
+    }
 
     // Horizontal movement
     switch (true) {

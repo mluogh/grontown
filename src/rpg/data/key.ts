@@ -1,9 +1,3 @@
-const image = {
-  spaceman: "spaceman",
-  tuxemon: "tuxemon",
-  detective: "detective",
-} as const;
-
 const scene = {
   boot: "boot",
   main: "main",
@@ -28,7 +22,6 @@ const tileset = {
 } as const;
 
 export const key = {
-  image,
   scene,
   tileset,
   tilemap,
