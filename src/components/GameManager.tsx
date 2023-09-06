@@ -5,6 +5,8 @@ import {
   Center,
   Flex,
   HStack,
+  Heading,
+  Image,
   Spinner,
   VStack,
 } from "@chakra-ui/react";
@@ -39,16 +41,50 @@ export const GameManager = () => {
       )}
       {sessionId && (
         <Box width={"100vw"} height={"100vh"}>
-          <HStack width={"100%"} height={"100%"} alignItems={"center"}>
+          <HStack width={"100%"} height={"100%"} alignItems={"center"} gap={0}>
             <Box width={"90%"} maxHeight={"100vh"} height={"100%"}>
               <Center width={"100%"} height={"100vh"}>
                 <Game />
               </Center>
             </Box>
-            <Flex width={"10%"} height={"100%"} alignItems={"center"}>
+            <Flex width={"9%"} height={"100%"} alignItems={"center"}>
               <VStack width={"100%"}>
-                <Button width={"100%"}>Notes</Button>
-                <Button width={"100%"}>Evidence</Button>
+                <Box
+                  as="button"
+                  width={"100%"}
+                  backgroundColor={"gray.700"}
+                  padding={4}
+                  borderRadius={"25px"}
+                  transition="transform 0.3s ease-in-out"
+                  _hover={{ transform: "scale(1.1)", cursor: "pointer" }}
+                >
+                  <VStack>
+                    <Image
+                      src="/assets/web/typewriter.png"
+                      alt="button image"
+                      width={"100%"}
+                    />
+                    <Heading size="xl">Notes</Heading>
+                  </VStack>
+                </Box>
+                <Box
+                  as="button"
+                  width={"100%"}
+                  backgroundColor={"gray.700"}
+                  padding={4}
+                  borderRadius={"25px"}
+                  transition="transform 0.3s ease-in-out"
+                  _hover={{ transform: "scale(1.1)", cursor: "pointer" }}
+                >
+                  <VStack>
+                    <Image
+                      src="/assets/web/detective.png"
+                      alt="button image"
+                      width={"100%"}
+                    />
+                    <Heading size="xl">Evidence</Heading>
+                  </VStack>
+                </Box>
               </VStack>
             </Flex>
           </HStack>

@@ -1,5 +1,6 @@
-import { ChakraProvider, theme } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { GameManager } from "components/GameManager";
+import theme from "theme";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
