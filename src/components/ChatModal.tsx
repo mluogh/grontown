@@ -1,13 +1,9 @@
 import {
-  Button,
   IconButton,
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
-  ModalCloseButton,
   useDisclosure,
   AspectRatio,
   Box,
@@ -18,17 +14,16 @@ import {
   Stack,
   Card,
   CardBody,
-  useColorMode,
   VStack,
-  Heading,
   Input,
   FormControl,
   Textarea,
 } from "@chakra-ui/react";
 import characters from "rpg/data/characters";
 import topics from "rpg/data/topics";
-import { EastworldClient, GameDef } from "eastworld-client";
+import { EastworldClient, GameDef, Message } from "eastworld-client";
 import { useEffect, useRef, useState } from "react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 type ChatModalProps = {
   sessionId: string;
@@ -42,7 +37,7 @@ const ChatModal = (props: ChatModalProps) => {
   const [agentName, setAgentName] = useState("");
   const [photoPath, setPhotoPath] = useState("");
   const [message, setMessage] = useState<string>("");
-  const [messageHistory, setMessageHistory] = useState<string[]>([]);
+  const [messageHistory, setMessageHistory] = useState<Message[]>([]);
   const boxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -51,40 +46,29 @@ const ChatModal = (props: ChatModalProps) => {
     }
   }, [messageHistory]);
 
-  // const inspectorDef = props.eastworldGame.agents?.find(
-  //   e => e.uuid === "2fa1bb81-30cd-4844-924b-42d40768c3ee",
-  // )!;
   useEffect(() => {
     if (!agentName) return;
+    setMessageHistory([]);
     props.eastworldClient.gameSessions.startChat(
       props.sessionId,
       agentName,
-      {
-        conversation: {},
-        history: [],
-      },
-      // props.agent_uuid!,
-      // {
-      //   conversation: {
-      //     correspondent: inspectorDef,
-      //   },
-      //   history: [],
-      // },
+      characters.detective.eastworldId,
+      { history: [], conversation: {} },
     );
   }, [agentName]);
 
   const chat = async (message: string) => {
-    setMessageHistory(messages => [...messages, `You: ${message}`]);
+    setMessageHistory(messages => [
+      ...messages,
+      { role: Message.role.USER, content: message },
+    ]);
     setMessage("");
     const response = await props.eastworldClient.gameSessions.chat(
       props.sessionId,
       agentName,
       message,
     );
-    setMessageHistory(messages => [
-      ...messages,
-      `${agentName}: ${response.message.content}`,
-    ]);
+    setMessageHistory(messages => [...messages, response.message]);
   };
 
   PubSub.subscribe(topics.enterChat, (channel, message: string) => {
@@ -97,6 +81,10 @@ const ChatModal = (props: ChatModalProps) => {
     PubSub.publish(topics.giveKeysToGame);
     onClose();
   };
+  // We want the transparent part of the modal to close on click
+  const handleCardClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
 
   return (
     <>
@@ -107,6 +95,7 @@ const ChatModal = (props: ChatModalProps) => {
           maxH={"fit-content"}
           bg="transparent"
           boxShadow={"none"}
+          onClick={close}
         >
           <ModalBody>
             <VStack>
@@ -122,6 +111,7 @@ const ChatModal = (props: ChatModalProps) => {
                   width={{ base: "80%", xl: "50%" }}
                   ratio={1}
                   maxWidth={"1100px"}
+                  onClick={handleCardClick}
                 >
                   <Center paddingLeft={3} paddingRight={3}>
                     <Image
@@ -140,24 +130,46 @@ const ChatModal = (props: ChatModalProps) => {
                   paddingRight={3}
                   borderRadius="xl"
                   boxShadow={"0px 0px 5px 6px #969696"}
+                  onClick={handleCardClick}
                 >
-                  <Card
-                    width="100%"
-                    height="100%"
-                    backgroundColor="#FFFFF0"
-                    textColor={"#000000"}
-                  >
+                  <Card width="100%" height="100%" fontFamily={"ptserif"}>
                     <CardBody width="100%" height="100%">
                       <Flex direction="column" h="full">
                         <Box
                           ref={boxRef}
                           flexGrow={1}
-                          fontFamily={"ptserif"}
                           overflow={"auto"}
                           fontSize={"xl"}
+                          marginBottom={2}
                         >
                           {messageHistory.map((message, index) => (
-                            <Text key={index}>{message}</Text>
+                            <Box
+                              key={index}
+                              borderRadius={"xl"}
+                              paddingTop={1}
+                              paddingBottom={1}
+                              paddingLeft={3}
+                              paddingRight={3}
+                              marginBottom={3}
+                              width={"fit-content"}
+                              backgroundColor={
+                                message.role === Message.role.USER
+                                  ? "gray.500"
+                                  : "blue.700"
+                              }
+                              marginLeft={
+                                message.role === Message.role.USER
+                                  ? "auto"
+                                  : "0"
+                              }
+                              marginRight={
+                                message.role !== Message.role.USER
+                                  ? "auto"
+                                  : "0"
+                              }
+                            >
+                              <Text key={index}>{message.content}</Text>
+                            </Box>
                           ))}
                         </Box>
                         <form
@@ -169,20 +181,20 @@ const ChatModal = (props: ChatModalProps) => {
                           <Flex width="100%">
                             <FormControl flex="1">
                               <Input
-                                borderColor={"black"}
-                                placeholder="Your Input"
+                                size={"lg"}
                                 value={message}
                                 onChange={e => setMessage(e.target.value)}
                               />
                             </FormControl>
-                            <Button
+                            <IconButton
                               ml={2}
                               flexShrink={0}
                               colorScheme="orange"
+                              size={"lg"}
                               type="submit"
-                            >
-                              Chat
-                            </Button>
+                              aria-label="Submit"
+                              icon={<ArrowForwardIcon />}
+                            ></IconButton>
                           </Flex>
                         </form>
                       </Flex>
@@ -191,20 +203,17 @@ const ChatModal = (props: ChatModalProps) => {
                 </AspectRatio>
               </Stack>
               <Card
-                width={"80vw"}
+                width={"50vw"}
                 maxW={"2250px"}
                 height={"20%"}
-                backgroundColor="#FFFFF0"
-                textColor={"#000000"}
-                // paddingLeft={3}
-                // paddingRight={3}
                 borderRadius="xl"
                 boxShadow={"0px 0px 5px 6px #969696"}
+                onClick={handleCardClick}
               >
                 <CardBody width="100%" height="100%">
                   <Textarea
                     rows={10}
-                    placeholder="Write down notes to solve the mystery!"
+                    placeholder="Jot down some notes here..."
                     value={props.notes}
                     onChange={e => props.setNotes(e.target.value)}
                   ></Textarea>
