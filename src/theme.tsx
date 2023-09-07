@@ -8,10 +8,10 @@ import { StyleFunctionProps } from "@chakra-ui/styled-system";
 // };
 
 const theme = extendTheme({
-  // fonts: {
-  //   pacifico: "Pacifico, handwriting", // Your custom font
-  //   ptserif: "PT Serif, serif",
-  // },
+  fonts: {
+    // pacifico: "Pacifico, handwriting", // Your custom font
+    ptserif: "PT Serif, serif",
+  },
   // styles: {
   //   global: (props: StyleFunctionProps) => ({
   //     body: {

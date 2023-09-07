@@ -122,6 +122,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
     if (this.cursors.space.isDown && this.closeNpc) {
       PubSub.publish(topics.enterChat, this.closeNpc.eastworldId);
+      PubSub.publish(topics.giveKeysToDom, this.closeNpc.eastworldId);
       // This needs to be reset or isDown gets stuck when we disable keyboard input later on
       this.cursors.space.reset();
     }

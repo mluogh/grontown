@@ -1,6 +1,7 @@
 const topics = {
   enterChat: "enterChat",
-  leaveChat: "leaveChat",
+  giveKeysToDom: "giveKeysToDom",
+  giveKeysToGame: "giveKeysToGame",
 };
 
 export default topics;
