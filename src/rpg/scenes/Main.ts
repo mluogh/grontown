@@ -83,12 +83,17 @@ export default class Main extends Phaser.Scene {
       if (character === "detective") {
         continue;
       }
+      const characterSpawnPoint = map.findObject(
+        "Misc",
+        object => object.name === character,
+      )!;
+      
       this.npcs.push(
         new Npc(
           value.eastworldId,
           this,
-          spawnPoint.x!,
-          spawnPoint.y!,
+          characterSpawnPoint.x!,
+          characterSpawnPoint.y!,
           value.sprite,
         ),
       );
