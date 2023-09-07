@@ -14,10 +14,12 @@ import ChatModal from "./ChatModal";
 import { EastworldClient } from "eastworld-client";
 import { useEffect, useState } from "react";
 import { Game } from "./Game";
+import NotesModal from "./Notes";
 
 // This wrapper mostly exists so the Phaser component in Game.tsx doesn't get re-rendered.
 export const GameManager = () => {
   const [sessionId, setSessionId] = useState<string>();
+  const [notes, setNotes] = useState<string>("");
   const eastworldClient = new EastworldClient({
     BASE: "http://localhost:8000",
   });
@@ -54,24 +56,7 @@ export const GameManager = () => {
               justifyContent={"center"}
             >
               <VStack width={"90%"} gap={5}>
-                <Box
-                  as="button"
-                  width={"100%"}
-                  backgroundColor={"gray.700"}
-                  padding={4}
-                  borderRadius={"25px"}
-                  transition="transform 0.3s ease-in-out"
-                  _hover={{ transform: "scale(1.1)", cursor: "pointer" }}
-                >
-                  <VStack>
-                    <Image
-                      src="/assets/web/typewriter.png"
-                      alt="button image"
-                      width={"100%"}
-                    />
-                    <Heading size="xl">Notes</Heading>
-                  </VStack>
-                </Box>
+                <NotesModal notes={notes} setNotes={setNotes} />
                 <Box
                   as="button"
                   width={"100%"}
@@ -87,7 +72,7 @@ export const GameManager = () => {
                       alt="button image"
                       width={"100%"}
                     />
-                    <Heading size="xl">Evidence</Heading>
+                    <Heading size="lg">Evidence</Heading>
                   </VStack>
                 </Box>
               </VStack>
@@ -96,6 +81,8 @@ export const GameManager = () => {
           <ChatModal
             eastworldClient={eastworldClient}
             sessionId={sessionId}
+            notes={notes}
+            setNotes={setNotes}
           ></ChatModal>
         </Box>
       )}

@@ -102,13 +102,13 @@ export default class Main extends Phaser.Scene {
   }
 
   private setupPubSub() {
-    PubSub.subscribe(topics.enterChat, () => {
+    PubSub.subscribe(topics.giveKeysToDom, () => {
       if (this.input.keyboard) {
         this.input.keyboard.enabled = false;
         this.input.keyboard.disableGlobalCapture();
       }
     });
-    PubSub.subscribe(topics.leaveChat, () => {
+    PubSub.subscribe(topics.giveKeysToGame, () => {
       if (this.input.keyboard) {
         this.input.keyboard.enabled = true;
         this.input.keyboard.enableGlobalCapture();
