@@ -2,6 +2,7 @@ import { Textures, Scene } from "phaser";
 
 import { key } from "../data";
 import characters from "rpg/data/characters";
+import evidence from "rpg/data/evidence";
 
 export default class Boot extends Phaser.Scene {
   constructor() {
@@ -31,6 +32,19 @@ export default class Boot extends Phaser.Scene {
           },
         );
       }
+    }
+
+    for (const [, value] of Object.entries(evidence)) {
+      
+      this.load.spritesheet(
+        value.sprite,
+        `assets/sprites/${value.sprite}.png`,
+        {
+          frameWidth: 64,
+          frameHeight: 64,
+        },
+      );
+      
     }
 
     this.load.tilemapTiledJSON(
