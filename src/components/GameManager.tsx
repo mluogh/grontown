@@ -1,7 +1,5 @@
 import {
-  AspectRatio,
   Box,
-  Button,
   Center,
   Flex,
   HStack,
@@ -16,6 +14,7 @@ import { EastworldClient } from "eastworld-client";
 import { useEffect, useState } from "react";
 import { Game } from "./Game";
 import NotesModal from "./Notes";
+import PoliceModal from "./PoliceModal";
 
 // This wrapper mostly exists so the Phaser component in Game.tsx doesn't get re-rendered.
 export const GameManager = () => {
@@ -85,8 +84,8 @@ export const GameManager = () => {
             notes={notes}
             setNotes={setNotes}
           ></ChatModal>
-          <EvidenceModal
-          ></EvidenceModal>
+          <EvidenceModal></EvidenceModal>
+          <PoliceModal eastworldClient={eastworldClient} />
         </Box>
       )}
     </Box>

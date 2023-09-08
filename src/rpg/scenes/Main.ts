@@ -4,7 +4,7 @@ import { key } from "../data";
 import { Player } from "../sprites";
 import { isProduction } from "../utils";
 import { Npc } from "rpg/sprites/Npc";
-import topics from "rpg/data/topics";
+import Topics from "rpg/data/topics";
 import characters from "rpg/data/characters";
 import evidence from "rpg/data/evidence";
 import { Evidence } from "rpg/sprites/Evidence";
@@ -90,10 +90,11 @@ export default class Main extends Phaser.Scene {
         "Misc",
         object => object.name === character,
       )!;
-      
+
       this.npcs.push(
         new Npc(
           value.eastworldId,
+          value.interactTopic,
           this,
           characterSpawnPoint.x!,
           characterSpawnPoint.y!,
@@ -109,7 +110,7 @@ export default class Main extends Phaser.Scene {
         "Misc",
         object => object.name === evidence_piece,
       )!;
-      
+
       this.evidences.push(
         new Evidence(
           evidence_piece,
@@ -121,7 +122,6 @@ export default class Main extends Phaser.Scene {
       );
     }
 
-
     // Watch the player and worldLayer for collisions
     this.physics.add.collider(this.player, collisionGroup);
     this.player.setUpSensingNpcs(this.npcs);
@@ -129,13 +129,13 @@ export default class Main extends Phaser.Scene {
   }
 
   private setupPubSub() {
-    PubSub.subscribe(topics.giveKeysToDom, () => {
+    PubSub.subscribe(Topics.giveKeysToDom, () => {
       if (this.input.keyboard) {
         this.input.keyboard.enabled = false;
         this.input.keyboard.disableGlobalCapture();
       }
     });
-    PubSub.subscribe(topics.giveKeysToGame, () => {
+    PubSub.subscribe(Topics.giveKeysToGame, () => {
       if (this.input.keyboard) {
         this.input.keyboard.enabled = true;
         this.input.keyboard.enableGlobalCapture();

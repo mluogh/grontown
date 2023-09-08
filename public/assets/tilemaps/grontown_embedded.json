@@ -2288,14 +2288,14 @@
                 {
                  "height":0,
                  "id":168,
-                 "name":"Policeman",
+                 "name":"Police Chief Locke",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":356.228701249527,
-                 "y":2151.91215448694
+                 "x":368.562333333333,
+                 "y":2136.57666666667
                 }, 
                 {
                  "height":0,
@@ -2306,8 +2306,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1558.19765240439,
-                 "y":450.738356683075
+                 "x":1558.2,
+                 "y":450.738
                 }],
          "opacity":1,
          "type":"objectgroup",

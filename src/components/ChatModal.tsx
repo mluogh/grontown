@@ -20,7 +20,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import characters from "rpg/data/characters";
-import topics from "rpg/data/topics";
+import Topics from "rpg/data/topics";
 import { EastworldClient, GameDef, Message } from "eastworld-client";
 import { useEffect, useRef, useState } from "react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
@@ -52,7 +52,7 @@ const ChatModal = (props: ChatModalProps) => {
     props.eastworldClient.gameSessions.startChat(
       props.sessionId,
       agentName,
-      characters.detective.eastworldId,
+      characters.detective.eastworldId!,
       { history: [], conversation: {} },
     );
   }, [agentName]);
@@ -71,14 +71,14 @@ const ChatModal = (props: ChatModalProps) => {
     setMessageHistory(messages => [...messages, response.message]);
   };
 
-  PubSub.subscribe(topics.enterChat, (channel, message: string) => {
+  PubSub.subscribe(Topics.enterChat, (channel, message: string) => {
     setAgentName(message);
     setPhotoPath(characters[message as keyof typeof characters].photo);
     onOpen();
   });
 
   const close = () => {
-    PubSub.publish(topics.giveKeysToGame);
+    PubSub.publish(Topics.giveKeysToGame);
     onClose();
   };
   // We want the transparent part of the modal to close on click
@@ -182,6 +182,7 @@ const ChatModal = (props: ChatModalProps) => {
                             <FormControl flex="1">
                               <Input
                                 size={"lg"}
+                                autoComplete="off"
                                 value={message}
                                 onChange={e => setMessage(e.target.value)}
                               />
