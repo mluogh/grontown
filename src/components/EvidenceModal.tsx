@@ -7,8 +7,9 @@ import {
   Image,
   Center,
   Text,
-  VStack,
   Modal,
+  HStack,
+  Card
 } from "@chakra-ui/react";
 import { useState } from "react";
 import evidence from "rpg/data/evidence";
@@ -34,39 +35,41 @@ export default function EvidenceModal() {
 
   return (
     <Modal isOpen={isOpen} onClose={close} isCentered>
-      <ModalOverlay />
-      <ModalContent
-        maxW="fit-content"
-        maxH={"fit-content"}
-        bg="transparent"
-        boxShadow={"none"}
-        onClick={close}
-      >
-        <ModalBody>
-          <VStack
-            width={"80vw"}
-            justifyContent="center"
-            alignItems="center"
-            gap={6}
-          >
-            <AspectRatio
-              width={{ base: "80%", xl: "50%" }}
-              ratio={1}
-              maxWidth={"1100px"}
+      <Card width="100%" height="100%" fontFamily={"ptserif"}>
+        <ModalOverlay />
+        <ModalContent
+          maxW="fit-content"
+          maxH={"fit-content"}
+          bg="gray.700"
+          boxShadow={"none"}
+          onClick={close}
+        >
+          <ModalBody>
+            <HStack
+              width={"60vw"}
+              justifyContent="center"
+              alignItems="center"
+              gap={8}
             >
-              <Center paddingLeft={3} paddingRight={3}>
-                <Image
-                  borderRadius="xl"
-                  src={photoPath}
-                  objectFit={"cover"}
-                  boxShadow={"0px 0px 5px 6px #969696"}
-                ></Image>
-              </Center>
-            </AspectRatio>
-            <Text>{text}</Text>
-          </VStack>
-        </ModalBody>
-      </ModalContent>
+              <AspectRatio
+                width={{ base: "80%", xl: "50%" }}
+                ratio={1}
+                maxWidth={"1100px"}
+              >
+                <Center paddingLeft={3} paddingRight={3}>
+                  <Image
+                    borderRadius="l"
+                    src={photoPath}
+                    objectFit={"cover"}
+                    boxShadow={"0px 0px 5px 6px #969696"}
+                  ></Image>
+                </Center>
+              </AspectRatio>
+              <Text color="white">{text}</Text>
+            </HStack>
+          </ModalBody>
+        </ModalContent>
+      </Card>
     </Modal>
   );
 }
