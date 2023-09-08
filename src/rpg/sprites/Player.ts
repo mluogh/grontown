@@ -95,11 +95,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         const evidence = object as Evidence;
         if (this.closeEvidence !== evidence) {
           this.closeEvidence = evidence as Evidence;
-          this.interactText.setAlpha(1);
-          this.interactText.setPosition(
-            evidence.x - evidence.width / 2,
-            evidence.y - evidence.height / 2 - 10,
-          );
         }
         this.closeEvidence = evidence as Evidence;
       });
