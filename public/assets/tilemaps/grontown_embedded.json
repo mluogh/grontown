@@ -2198,8 +2198,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1079.3635630443,
-                 "y":637.141920484665
+                 "x":1079.36,
+                 "y":637.142
                 }, 
                 {
                  "height":0,
@@ -2210,8 +2210,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":331.567503597122,
-                 "y":95.1947485800833
+                 "x":331.568,
+                 "y":95.1947
                 }, 
                 {
                  "height":0,
@@ -2222,8 +2222,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":468.422648996592,
-                 "y":1131.24978795911
+                 "x":468.423,
+                 "y":1131.25
                 }, 
                 {
                  "height":0,
@@ -2234,8 +2234,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1878.74724346838,
-                 "y":424.973702006816
+                 "x":1878.75,
+                 "y":424.974
                 }, 
                 {
                  "height":0,
@@ -2258,8 +2258,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1149.88393411587,
-                 "y":184.253106020447
+                 "x":1149.88,
+                 "y":184.253
                 }, 
                 {
                  "height":0,
@@ -2270,8 +2270,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1133.74610753502,
-                 "y":441.546383945475
+                 "x":1133.75,
+                 "y":441.546
                 }, 
                 {
                  "height":0,
@@ -2282,8 +2282,32 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1601.04071563802,
-                 "y":1315.39568345324
+                 "x":1601.04,
+                 "y":1315.4
+                }, 
+                {
+                 "height":0,
+                 "id":168,
+                 "name":"Policeman",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":356.228701249527,
+                 "y":2151.91215448694
+                }, 
+                {
+                 "height":0,
+                 "id":169,
+                 "name":"Harrington Body",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1558.19765240439,
+                 "y":450.738356683075
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2292,7 +2316,7 @@
          "y":0
         }],
  "nextlayerid":17,
- "nextobjectid":168,
+ "nextobjectid":171,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",

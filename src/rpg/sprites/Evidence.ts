@@ -2,15 +2,19 @@ import Phaser from "phaser";
 
 export class Evidence extends Phaser.Physics.Arcade.Sprite {
   // private textGameObject: Phaser.GameObjects.Text;
+  evidence_name: string;
 
   constructor(
+    evidence_name: string,
     scene: Phaser.Scene,
     x: number,
     y: number,
     texture: string,
     frame = 0,
   ) {
+    
     super(scene, x, y, texture, frame);
+    this.evidence_name = evidence_name;
     this.scene = scene;
     this.scene.physics.add.existing(this);
     this.scene.add.existing(this);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="70" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="168">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="70" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="171">
  <editorsettings>
   <export target="grontown_embedded.json" format="json"/>
  </editorsettings>
@@ -854,6 +854,12 @@
    <point/>
   </object>
   <object id="166" name="Mei Lin" x="1601.04" y="1315.4">
+   <point/>
+  </object>
+  <object id="168" name="Policeman" x="356.229" y="2151.91">
+   <point/>
+  </object>
+  <object id="169" name="Harrington Body" x="1558.2" y="450.738">
    <point/>
   </object>
  </objectgroup>

@@ -147,7 +147,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     if (this.cursors.space.isDown && this.closeEvidence) {
-      PubSub.publish(topics.enterEvidenceModal);
+      PubSub.publish(topics.enterEvidenceModal, this.closeEvidence.evidence_name);
       PubSub.publish(topics.giveKeysToDom);
       // This needs to be reset or isDown gets stuck when we disable keyboard input later on
       this.cursors.space.reset();
