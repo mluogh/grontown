@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 
 import { Npc } from "./Npc";
+import { Evidence } from "./Evidence"
 import PubSub from "pubsub-js";
 import topics from "rpg/data/topics";
 import characters from "rpg/data/characters";
@@ -22,8 +23,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   sensor: Phaser.Physics.Arcade.Sprite;
   // An NPC that is close enough to speak to.
   closeNpc: Npc | null = null;
+  closeEvidence: Evidence | null = null;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
-  speakText: Phaser.GameObjects.Text;
+  interactText: Phaser.GameObjects.Text;
 
   constructor(
     scene: Phaser.Scene,
@@ -63,11 +65,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.play(Animation.Right);
 
-    this.speakText = this.scene.add.text(0, 0, "[Space]", {
+    this.interactText = this.scene.add.text(0, 0, "[Space]", {
       align: "center",
       fontSize: "16px",
     });
-    this.speakText.setAlpha(0).setDepth(100);
+    this.interactText.setAlpha(0).setDepth(100);
   }
 
   public setUpSensingNpcs(npcs: Npc[]) {
@@ -76,13 +78,30 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         const npc = object as Npc;
         if (this.closeNpc !== npc) {
           this.closeNpc = npc as Npc;
-          this.speakText.setAlpha(1);
-          this.speakText.setPosition(
+          this.interactText.setAlpha(1);
+          this.interactText.setPosition(
             npc.x - npc.width / 2,
             npc.y - npc.height / 2 - 10,
           );
         }
         this.closeNpc = npc as Npc;
+      });
+    }
+  }
+
+  public setUpSensingEvidence(evidences: Evidence[]) {
+    for (const evidence of evidences) {
+      this.scene.physics.add.collider(this.sensor, evidence, (player, object) => {
+        const evidence = object as Evidence;
+        if (this.closeEvidence !== evidence) {
+          this.closeEvidence = evidence as Evidence;
+          this.interactText.setAlpha(1);
+          this.interactText.setPosition(
+            evidence.x - evidence.width / 2,
+            evidence.y - evidence.height / 2 - 10,
+          );
+        }
+        this.closeEvidence = evidence as Evidence;
       });
     }
   }
@@ -118,11 +137,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       !this.scene.physics.overlap(this.sensor, this.closeNpc)
     ) {
       this.closeNpc = null;
-      this.speakText.setAlpha(0);
+      this.interactText.setAlpha(0);
     }
     if (this.cursors.space.isDown && this.closeNpc) {
       PubSub.publish(topics.enterChat, this.closeNpc.eastworldId);
       PubSub.publish(topics.giveKeysToDom, this.closeNpc.eastworldId);
+      // This needs to be reset or isDown gets stuck when we disable keyboard input later on
+      this.cursors.space.reset();
+    }
+
+    if (this.cursors.space.isDown && this.closeEvidence) {
+      PubSub.publish(topics.enterEvidenceModal);
+      PubSub.publish(topics.giveKeysToDom);
       // This needs to be reset or isDown gets stuck when we disable keyboard input later on
       this.cursors.space.reset();
     }
