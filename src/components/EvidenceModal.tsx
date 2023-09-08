@@ -21,6 +21,7 @@ export default function EvidenceModal() {
 
   PubSub.subscribe(topics.enterEvidenceModal, (channel, message: string) => {
     const evidenceKey = message as keyof typeof evidence;
+    console.log(evidence, evidenceKey)
     setText(evidence[evidenceKey].text);
     setPhotoPath(evidence[evidenceKey].photo);
     onOpen();

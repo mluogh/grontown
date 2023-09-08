@@ -6,10 +6,13 @@ import { isProduction } from "../utils";
 import { Npc } from "rpg/sprites/Npc";
 import topics from "rpg/data/topics";
 import characters from "rpg/data/characters";
+import evidence from "rpg/data/evidence";
+import { Evidence } from "rpg/sprites/Evidence";
 
 export default class Main extends Phaser.Scene {
   private player!: Player;
   private npcs: Npc[] = [];
+  private evidences: Evidence[] = [];
 
   constructor() {
     super(key.scene.main);
@@ -17,7 +20,7 @@ export default class Main extends Phaser.Scene {
 
   create() {
     const { map, collisionGroup } = this.createMap();
-    this.createCharacters(map, collisionGroup);
+    this.createInteractables(map, collisionGroup);
     this.setupPubSub();
 
     this.renderDebug();
@@ -69,7 +72,7 @@ export default class Main extends Phaser.Scene {
     return { map, collisionGroup };
   }
 
-  private createCharacters(
+  private createInteractables(
     map: Phaser.Tilemaps.Tilemap,
     collisionGroup: Phaser.Physics.Arcade.StaticGroup,
   ) {
@@ -101,9 +104,28 @@ export default class Main extends Phaser.Scene {
       this.physics.add.collider(this.player, this.npcs[this.npcs.length - 1]);
     }
 
+    for (const [evidence_piece, value] of Object.entries(evidence)) {
+      const evidenceSpawnPoint = map.findObject(
+        "Misc",
+        object => object.name === evidence_piece,
+      )!;
+      
+      this.evidences.push(
+        new Evidence(
+          evidence_piece,
+          this,
+          evidenceSpawnPoint.x!,
+          evidenceSpawnPoint.y!,
+          value.sprite,
+        ),
+      );
+    }
+
+
     // Watch the player and worldLayer for collisions
     this.physics.add.collider(this.player, collisionGroup);
     this.player.setUpSensingNpcs(this.npcs);
+    this.player.setUpSensingEvidence(this.evidences);
   }
 
   private setupPubSub() {

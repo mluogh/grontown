@@ -11,6 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import ChatModal from "./ChatModal";
+import EvidenceModal from "./EvidenceModal";
 import { EastworldClient } from "eastworld-client";
 import { useEffect, useState } from "react";
 import { Game } from "./Game";
@@ -84,6 +85,8 @@ export const GameManager = () => {
             notes={notes}
             setNotes={setNotes}
           ></ChatModal>
+          <EvidenceModal
+          ></EvidenceModal>
         </Box>
       )}
     </Box>
