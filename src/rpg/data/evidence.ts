@@ -1,7 +1,8 @@
 const evidence = {
-  "harrington body": {
+  "Harrington Body": {
     text: "Elias Harrington's body. He looks quite deceased.",
-    photo: "assets/evidence/harrington_body.jpeg",
+    photo: "assets/photos/li_wei.jpeg",
+    sprite: "detective"
   },
 };
 
