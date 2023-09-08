@@ -15,6 +15,7 @@ import characters from "rpg/data/characters";
 import topics from "rpg/data/topics";
 import { EastworldClient } from "eastworld-client";
 import { useEffect, useState } from "react";
+import story from "rpg/data/story";
 
 type PoliceModalProps = {
   eastworldClient: EastworldClient;
@@ -47,6 +48,18 @@ const ChatModal = ({ eastworldClient }: PoliceModalProps) => {
 
   const scoreExplanation = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const score = await eastworldClient.llm.rate(
+      `A player is playing a murder mystery game as a detective.
+The actual plot they should discover is as follows:
+"${story.explanation}"
+
+This is the player's explanation of what happened:
+"${explanation}"
+
+How close is this to the actual plot?
+`,
+    );
   };
 
   return (
