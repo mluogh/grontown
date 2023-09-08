@@ -1,11 +1,13 @@
 import Phaser from "phaser";
+import Topics from "rpg/data/topics";
 
 export class Npc extends Phaser.Physics.Arcade.Sprite {
-  // private textGameObject: Phaser.GameObjects.Text;
-  eastworldId: string;
+  eastworldId: string | null;
+  interactTopic: Topics;
 
   constructor(
-    eastworldId: string,
+    eastworldId: string | null,
+    interactTopic: Topics,
     scene: Phaser.Scene,
     x: number,
     y: number,
@@ -13,7 +15,11 @@ export class Npc extends Phaser.Physics.Arcade.Sprite {
     frame = 0,
   ) {
     super(scene, x, y, texture, frame);
+    if (interactTopic === Topics.enterChat && !eastworldId) {
+      throw new Error("Chat NPC must have an eastworldId");
+    }
     this.eastworldId = eastworldId;
+    this.interactTopic = interactTopic;
     this.scene = scene;
     this.scene.physics.add.existing(this);
     this.scene.add.existing(this);

@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 
 import { Npc } from "./Npc";
-import { Evidence } from "./Evidence"
+import { Evidence } from "./Evidence";
 import PubSub from "pubsub-js";
 import topics from "rpg/data/topics";
 import characters from "rpg/data/characters";
@@ -91,13 +91,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   public setUpSensingEvidence(evidences: Evidence[]) {
     for (const evidence of evidences) {
-      this.scene.physics.add.collider(this.sensor, evidence, (player, object) => {
-        const evidence = object as Evidence;
-        if (this.closeEvidence !== evidence) {
+      this.scene.physics.add.collider(
+        this.sensor,
+        evidence,
+        (player, object) => {
+          const evidence = object as Evidence;
+          if (this.closeEvidence !== evidence) {
+            this.closeEvidence = evidence as Evidence;
+          }
           this.closeEvidence = evidence as Evidence;
-        }
-        this.closeEvidence = evidence as Evidence;
-      });
+        },
+      );
     }
   }
 
@@ -135,14 +139,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.interactText.setAlpha(0);
     }
     if (this.cursors.space.isDown && this.closeNpc) {
-      PubSub.publish(topics.enterChat, this.closeNpc.eastworldId);
+      PubSub.publish(this.closeNpc.interactTopic, this.closeNpc.eastworldId);
       PubSub.publish(topics.giveKeysToDom, this.closeNpc.eastworldId);
       // This needs to be reset or isDown gets stuck when we disable keyboard input later on
       this.cursors.space.reset();
     }
 
     if (this.cursors.space.isDown && this.closeEvidence) {
-      PubSub.publish(topics.enterEvidenceModal, this.closeEvidence.evidence_name);
+      PubSub.publish(
+        topics.enterEvidenceModal,
+        this.closeEvidence.evidence_name,
+      );
       PubSub.publish(topics.giveKeysToDom);
       // This needs to be reset or isDown gets stuck when we disable keyboard input later on
       this.cursors.space.reset();

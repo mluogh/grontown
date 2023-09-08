@@ -12,23 +12,23 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import evidence from "rpg/data/evidence";
-import topics from "rpg/data/topics";
+import Topics from "rpg/data/topics";
 
 export default function EvidenceModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [text, setText] = useState("");
   const [photoPath, setPhotoPath] = useState("");
 
-  PubSub.subscribe(topics.enterEvidenceModal, (channel, message: string) => {
+  PubSub.subscribe(Topics.enterEvidenceModal, (channel, message: string) => {
     const evidenceKey = message as keyof typeof evidence;
-    console.log(evidence, evidenceKey)
+    console.log(evidence, evidenceKey);
     setText(evidence[evidenceKey].text);
     setPhotoPath(evidence[evidenceKey].photo);
     onOpen();
   });
 
   const close = () => {
-    PubSub.publish(topics.giveKeysToGame);
+    PubSub.publish(Topics.giveKeysToGame);
     onClose();
   };
 

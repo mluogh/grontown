@@ -1,9 +1,9 @@
-const topics = {
-  enterChat: "enterChat",
-  enterEvidenceModal: "enterEvidenceModal",
-  enterArrestModal: "enterArrestModal",
-  giveKeysToDom: "giveKeysToDom",
-  giveKeysToGame: "giveKeysToGame",
-};
+enum Topics {
+  enterChat = "enterChat",
+  enterEvidenceModal = "enterEvidenceModal",
+  enterArrestModal = "enterArrestModal",
+  giveKeysToDom = "giveKeysToDom",
+  giveKeysToGame = "giveKeysToGame",
+}
 
-export default topics;
+export default Topics;
