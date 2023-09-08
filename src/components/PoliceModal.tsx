@@ -107,6 +107,10 @@ How close is this to the actual plot?
                 width={{ base: "80%", xl: "50%" }}
                 ratio={1}
                 maxWidth={"1100px"}
+                boxShadow={"0px 0px 5px 6px #969696"}
+                paddingLeft={3}
+                paddingRight={3}
+                borderRadius={"xl"}
               >
                 <Card width={"100%"} height={"100%"}>
                   <CardBody width={"100%"} height={"100%"}>
@@ -136,8 +140,10 @@ How close is this to the actual plot?
                           />
                         </FormControl>
                       </Flex>
-                      <Box>
+                      <Box width="100%">
                         <Button
+                          width="100%"
+                          colorScheme="red"
                           flexShrink={0}
                           onClick={() => scoreExplanation()}
                           isDisabled={!suspectValid}
