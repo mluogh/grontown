@@ -83,6 +83,7 @@ export class GameSessionsService {
      *
      * - **session_uuid** (str): the uuid of the session
      * - **agent** (str): either the uuid or the name of the agent.
+     * - **correspondent** (str): the character with whom the agent is speaking to.
      * - **conversation** (Conversation): conversation context. See definition.
      * - **history** List[Message]: pre-populate the conversation so you start
      * as though you were mid-conversation
@@ -91,6 +92,7 @@ export class GameSessionsService {
      * - none
      * @param sessionUuid
      * @param agent
+     * @param correspondent
      * @param requestBody
      * @returns any Successful Response
      * @throws ApiError
@@ -98,6 +100,7 @@ export class GameSessionsService {
     public startChat(
         sessionUuid: string,
         agent: string,
+        correspondent: string,
         requestBody: Body_start_chat,
     ): CancelablePromise<any> {
         return this.httpRequest.request({
@@ -108,6 +111,7 @@ export class GameSessionsService {
             },
             query: {
                 'agent': agent,
+                'correspondent': correspondent,
             },
             body: requestBody,
             mediaType: 'application/json',

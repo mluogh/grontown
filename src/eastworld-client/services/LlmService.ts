@@ -30,4 +30,25 @@ export class LlmService {
         });
     }
 
+    /**
+     * Rate
+     * @param question
+     * @returns number Successful Response
+     * @throws ApiError
+     */
+    public rate(
+        question: string,
+    ): CancelablePromise<number> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/llm/rate',
+            query: {
+                'question': question,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+
 }
