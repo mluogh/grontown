@@ -338,3 +338,14 @@ Authors: bluecarrot16, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (Eliz
 - feet/shoes/male/black.png: by bluecarrot16, Johannes Sjölund (wulax). License(s): CC-BY-SA 3.0, GPL 3.0. 
     - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
     - http://opengameart.org/content/lpc-clothing-updates
+
+- flower.png by Lanea Zimmerman "Sharm". License(s): CC-BY 3.0, GPL 3.0,GPL 2.0, OGA-BY 3.0
+    - https://opengameart.org/content/lpc-flower-grow-cycle
+
+- envelope.png by Jordan Irwin (AntumDeluge). License(s): CC-BY 4.0, CC-BY 3.0, OGA-BY 3.0
+    - https://opengameart.org/content/envelope
+
+- newspaper.png by Clint Bellanger. License(s): CC-BY 3.0, OGA-BY 3.0
+    - https://opengameart.org/content/recycle-items-set
+
+    

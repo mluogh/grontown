@@ -9,7 +9,8 @@ import {
   Text,
   Modal,
   HStack,
-  Card
+  Card,
+  VStack
 } from "@chakra-ui/react";
 import { useState } from "react";
 import evidence from "rpg/data/evidence";
@@ -40,8 +41,6 @@ export default function EvidenceModal() {
         <ModalContent
           maxW="fit-content"
           maxH={"fit-content"}
-          bg="gray.700"
-          boxShadow={"none"}
           onClick={close}
         >
           <ModalBody>
@@ -50,11 +49,11 @@ export default function EvidenceModal() {
               justifyContent="center"
               alignItems="center"
               gap={8}
+              maxWidth={"1100px"}
             >
               <AspectRatio
-                width={{ base: "80%", xl: "50%" }}
+                width={ "100%"}
                 ratio={1}
-                maxWidth={"1100px"}
               >
                 <Center paddingLeft={3} paddingRight={3}>
                   <Image
@@ -65,7 +64,7 @@ export default function EvidenceModal() {
                   ></Image>
                 </Center>
               </AspectRatio>
-              <Text color="white">{text}</Text>
+              <Text color="white" whiteSpace="pre-wrap">{text}</Text>
             </HStack>
           </ModalBody>
         </ModalContent>

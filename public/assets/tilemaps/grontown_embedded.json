@@ -2294,8 +2294,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":368.562333333333,
-                 "y":2136.57666666667
+                 "x":368.562,
+                 "y":2136.58
                 }, 
                 {
                  "height":0,
@@ -2306,8 +2306,68 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1558.2,
-                 "y":450.738
+                 "x":571.906929193487,
+                 "y":1163.19540249905
+                }, 
+                {
+                 "height":0,
+                 "id":171,
+                 "name":"Wine Glass",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1592.12419538054,
+                 "y":385.30859522908
+                }, 
+                {
+                 "height":0,
+                 "id":172,
+                 "name":"Letter",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1832.03332071185,
+                 "y":1895.03975766755
+                }, 
+                {
+                 "height":0,
+                 "id":173,
+                 "name":"Debt Letter",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":540.40136312003,
+                 "y":225.369178341537
+                }, 
+                {
+                 "height":0,
+                 "id":174,
+                 "name":"Gruel Flower",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1841.72661870504,
+                 "y":2132.52555850057
+                }, 
+                {
+                 "height":0,
+                 "id":176,
+                 "name":"Newspaper",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":113.896251419917,
+                 "y":1068.68610374858
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2316,7 +2376,7 @@
          "y":0
         }],
  "nextlayerid":17,
- "nextobjectid":171,
+ "nextobjectid":177,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",

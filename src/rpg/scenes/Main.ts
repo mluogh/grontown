@@ -110,7 +110,7 @@ export default class Main extends Phaser.Scene {
         "Misc",
         object => object.name === evidence_piece,
       )!;
-
+      
       this.evidences.push(
         new Evidence(
           evidence_piece,
