@@ -25,6 +25,6 @@ export class Evidence extends Phaser.Physics.Arcade.Sprite {
     // The image has a bit of whitespace so use setOffset
     const width = this.texture.getSourceImage().width
     const height = this.texture.getSourceImage().height
-    this.setSize(width / 2, height / 3).setOffset(width / 4, height / 4);
+    this.setSize(width, height);
   }
 }
