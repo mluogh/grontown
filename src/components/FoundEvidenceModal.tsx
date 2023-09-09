@@ -16,22 +16,31 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import evidence from "rpg/data/evidence";
 import Topics from "rpg/data/topics";
 
 function CroppedImage({ imgSrc }: { imgSrc: string }) {
-  const imgRef = useRef<HTMLImageElement>(null);
+  const [clipPath, setClipPath] = useState<string>("");
 
   useEffect(() => {
-    const imgHeight = imgRef.current!.offsetHeight;
-    const clipHeight = imgHeight * 0.9;
-    imgRef.current!.style.clipPath = `inset(0px 0px ${
-      imgHeight - clipHeight
-    }px 0px)`;
-  }, []);
+    const image = new window.Image();
+    image.src = imgSrc;
 
-  return <Image ref={imgRef} src={imgSrc} />;
+    const onLoad = () => {
+      const height = image.height;
+      const clipHeight = height * 0.05;
+      setClipPath(`inset(0px 0px ${clipHeight}px 0px)`);
+    };
+
+    image.addEventListener("load", onLoad);
+
+    return () => {
+      image.removeEventListener("load", onLoad);
+    };
+  }, [imgSrc]);
+
+  return <Image src={imgSrc} objectFit="cover" clipPath={clipPath} />;
 }
 
 interface FoundEvidenceModalProps {
@@ -90,15 +99,6 @@ export default function FoundEvidenceModal(props: FoundEvidenceModalProps) {
                       <AccordionIcon />
                     </AccordionButton>
                     <AccordionPanel pb={4}>
-                      <Box position="relative" overflow="hidden">
-                        <Image
-                          src={
-                            evidence[evidenceKey as keyof typeof evidence].text
-                          }
-                          position="absolute"
-                          bottom="10%"
-                        />
-                      </Box>
                       <CroppedImage
                         imgSrc={
                           evidence[evidenceKey as keyof typeof evidence].photo
