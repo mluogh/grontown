@@ -43,7 +43,7 @@ William Harrington seen in Chinatown brothel! What does this mean for Harrington
 
 ...
     `,
-    photo: "assets/photos/debt.jpeg",
+    photo: "assets/photos/newspaper.jpeg",
     sprite: "newspaper"
   },
 };
