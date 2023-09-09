@@ -1,32 +1,16 @@
 import {
-  Button,
-  IconButton,
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
-  ModalCloseButton,
   useDisclosure,
-  AspectRatio,
   Box,
   Image,
-  Center,
-  Flex,
-  Text,
-  Stack,
-  Card,
-  CardBody,
-  useColorMode,
   VStack,
   Heading,
-  Input,
-  FormControl,
   Textarea,
 } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
-import topics from "rpg/data/topics";
+import Topics from "rpg/data/topics";
 
 interface NotesModalProps {
   notes: string;
@@ -36,14 +20,13 @@ interface NotesModalProps {
 const NotesModal = ({ notes, setNotes }: NotesModalProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // useEffect(() => {}, []);
   const open = () => {
-    PubSub.publish(topics.giveKeysToDom);
+    PubSub.publish(Topics.giveKeysToDom);
     onOpen();
   };
 
   const close = () => {
-    PubSub.publish(topics.giveKeysToGame);
+    PubSub.publish(Topics.giveKeysToGame);
     onClose();
   };
 
