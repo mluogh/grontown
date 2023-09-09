@@ -84,7 +84,7 @@ How close is this to the actual plot?
             <Stack
               direction={{ base: "column", xl: "row" }}
               width={"80vw"}
-              maxW={"2250px"}
+              maxW={"1500px"}
               justifyContent="center"
               alignItems="center"
               gap={6}
@@ -101,6 +101,26 @@ How close is this to the actual plot?
                     objectFit={"cover"}
                     boxShadow={"0px 0px 5px 6px #969696"}
                   ></Image>
+                  <Image
+                    position="absolute"
+                    bottom="0"
+                    width="100%"
+                    height="15%"
+                    borderRadius={"xl"}
+                    src="/assets/web/wood_plate.png"
+                  ></Image>
+                  <Center
+                    position="absolute"
+                    bottom="0"
+                    width="100%"
+                    height="15%"
+                    borderRadius={"xl"}
+                    fontFamily={"cursive"}
+                    textColor={"gray.800"}
+                    fontSize={"5xl"}
+                  >
+                    Police Chief Locke
+                  </Center>
                 </Center>
               </AspectRatio>
               <AspectRatio
@@ -116,7 +136,9 @@ How close is this to the actual plot?
                   <CardBody width={"100%"} height={"100%"}>
                     <Flex direction="column" height="100%">
                       <FormControl isInvalid={!suspectValid} marginBottom={6}>
-                        <Heading size={"lg"}>Who should we arrest?</Heading>
+                        <Heading size={"lg"} marginBottom={2}>
+                          Who should we arrest?
+                        </Heading>
                         <Input
                           size={"lg"}
                           value={suspect}
