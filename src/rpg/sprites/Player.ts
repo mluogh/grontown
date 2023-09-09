@@ -91,17 +91,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   public setUpSensingEvidence(evidences: Evidence[]) {
     for (const evidence of evidences) {
-      this.scene.physics.add.overlap(
-        this,
-        evidence,
-        (player, object) => {
-          const evidence = object as Evidence;
-          if (this.closeEvidence !== evidence) {
-            this.closeEvidence = evidence as Evidence;
-          }
+      this.scene.physics.add.overlap(this, evidence, (player, object) => {
+        const evidence = object as Evidence;
+        if (this.closeEvidence !== evidence) {
           this.closeEvidence = evidence as Evidence;
-        },
-      );
+        }
+        this.closeEvidence = evidence as Evidence;
+      });
     }
   }
 
