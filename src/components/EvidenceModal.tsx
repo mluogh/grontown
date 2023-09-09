@@ -45,53 +45,53 @@ export default function EvidenceModal() {
     <Modal isOpen={isOpen} onClose={close} isCentered>
       <Card width="100%" height="100%" fontFamily={"ptserif"}>
         <ModalOverlay />
-        <ModalContent
-          maxW="fit-content"
-          maxH={"fit-content"}
-          onClick={close}
-        >
+        <ModalContent maxW="fit-content" maxH={"fit-content"} onClick={close}>
           <ModalBody>
             <HStack
-              width={"60vw"}
+              width={"80vw"}
               justifyContent="center"
               alignItems="center"
               gap={8}
               maxWidth={"1100px"}
             >
-              <AspectRatio
-                width={ "100%"}
-                ratio={1}
-              >
+              <AspectRatio width={"50%"} ratio={1}>
                 <Center paddingLeft={3} paddingRight={3}>
-                <Image
-                  borderRadius="xl"
-                  src={photoPath}
-                  objectFit={"cover"}
-                  boxShadow={"0px 0px 5px 6px #969696"}
-                ></Image>
-                <Image
-                  position="absolute"
-                  bottom="0"
-                  width="100%"
-                  height="15%"
-                  borderRadius={"xl"}
-                  src="/assets/web/wood_plate.png"
-                ></Image>
-                <Center
-                  position="absolute"
-                  bottom="0"
-                  width="100%"
-                  height="15%"
-                  borderRadius={"xl"}
-                  fontFamily={"cursive"}
-                  textColor={"gray.800"}
-                  fontSize={"4xl"}
-                >
-                  {evidenceName}
+                  <Image
+                    borderRadius="xl"
+                    src={photoPath}
+                    objectFit={"cover"}
+                    boxShadow={"0px 0px 5px 6px #969696"}
+                  ></Image>
+                  <Image
+                    position="absolute"
+                    bottom="0"
+                    width="100%"
+                    height="15%"
+                    borderRadius={"xl"}
+                    src="/assets/web/wood_plate.png"
+                  ></Image>
+                  <Center
+                    position="absolute"
+                    bottom="0"
+                    width="100%"
+                    height="15%"
+                    borderRadius={"xl"}
+                    fontFamily={"cursive"}
+                    textColor={"gray.800"}
+                    fontSize={"4xl"}
+                  >
+                    {evidenceName}
+                  </Center>
                 </Center>
-              </Center>
               </AspectRatio>
-              <Text color="white" whiteSpace="pre-wrap">{text}</Text>
+              <Text
+                color="white"
+                whiteSpace="pre-wrap"
+                fontSize={"xl"}
+                width={"50%"}
+              >
+                {text}
+              </Text>
             </HStack>
           </ModalBody>
         </ModalContent>
