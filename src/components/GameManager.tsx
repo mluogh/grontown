@@ -57,7 +57,7 @@ export const GameManager = () => {
               justifyContent={"center"}
             >
               <VStack width={"90%"} gap={5}>
-                <FoundEvidenceModal />
+                <FoundEvidenceModal notes={notes} setNotes={setNotes} />
                 <NotesModal notes={notes} setNotes={setNotes} />
               </VStack>
             </Flex>

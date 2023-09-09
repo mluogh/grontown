@@ -13,12 +13,33 @@ import {
   VStack,
   Image,
   Heading,
+  Text,
+  Textarea,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import evidence from "rpg/data/evidence";
 import Topics from "rpg/data/topics";
 
-export default function FoundEvidenceModal() {
+function CroppedImage({ imgSrc }: { imgSrc: string }) {
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const imgHeight = imgRef.current!.offsetHeight;
+    const clipHeight = imgHeight * 0.9;
+    imgRef.current!.style.clipPath = `inset(0px 0px ${
+      imgHeight - clipHeight
+    }px 0px)`;
+  }, []);
+
+  return <Image ref={imgRef} src={imgSrc} />;
+}
+
+interface FoundEvidenceModalProps {
+  notes: string;
+  setNotes: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function FoundEvidenceModal(props: FoundEvidenceModalProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [foundEvidence, setFoundEvidence] = useState<string[]>([]);
 
@@ -54,30 +75,49 @@ export default function FoundEvidenceModal() {
           <Heading size="lg">Evidence</Heading>
         </VStack>
       </Box>
-      <Modal isOpen={isOpen} onClose={close} isCentered>
+      <Modal isOpen={isOpen} onClose={close} isCentered size={"2xl"}>
         <ModalOverlay />
         <ModalContent>
           <ModalBody>
-            <Accordion allowToggle>
-              {foundEvidence.map((evidenceKey, index) => (
-                <AccordionItem>
-                  <Heading>
+            <VStack gap={4}>
+              <Accordion allowToggle width={"100%"}>
+                {foundEvidence.map((evidenceKey, index) => (
+                  <AccordionItem key={index} width={"100%"}>
                     <AccordionButton>
                       <Box as="span" flex="1" textAlign="left">
-                        {evidenceKey}
+                        <Heading size={"xl"}>{evidenceKey}</Heading>
                       </Box>
                       <AccordionIcon />
                     </AccordionButton>
-                  </Heading>
-                  <AccordionPanel pb={4}>
-                    <Image
-                      src={evidence[evidenceKey as keyof typeof evidence].photo}
-                    />
-                    {evidence[evidenceKey as keyof typeof evidence].text}
-                  </AccordionPanel>
-                </AccordionItem>
-              ))}
-            </Accordion>
+                    <AccordionPanel pb={4}>
+                      <Box position="relative" overflow="hidden">
+                        <Image
+                          src={
+                            evidence[evidenceKey as keyof typeof evidence].text
+                          }
+                          position="absolute"
+                          bottom="10%"
+                        />
+                      </Box>
+                      <CroppedImage
+                        imgSrc={
+                          evidence[evidenceKey as keyof typeof evidence].photo
+                        }
+                      />
+                      <Text fontSize={"xl"}>
+                        {evidence[evidenceKey as keyof typeof evidence].text}
+                      </Text>
+                    </AccordionPanel>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+              <Textarea
+                placeholder="Notice anything in the evidence? Write it down to yourself here."
+                value={props.notes}
+                rows={10}
+                onChange={e => props.setNotes(e.target.value)}
+              />
+            </VStack>
           </ModalBody>
         </ModalContent>
       </Modal>
