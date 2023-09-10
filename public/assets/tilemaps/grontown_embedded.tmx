@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="70" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="171">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="70" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="177">
  <editorsettings>
   <export target="grontown_embedded.json" format="json"/>
  </editorsettings>
@@ -859,7 +859,22 @@
   <object id="168" name="Police Chief Locke" x="368.562" y="2136.58">
    <point/>
   </object>
-  <object id="169" name="Harrington Body" x="1558.2" y="450.738">
+  <object id="169" name="Harrington Body" x="571.907" y="1163.2">
+   <point/>
+  </object>
+  <object id="171" name="Wine Glass" x="1592.12" y="385.309">
+   <point/>
+  </object>
+  <object id="172" name="Letter" x="1832.03" y="1895.04">
+   <point/>
+  </object>
+  <object id="173" name="Debt Letter" x="540.401" y="225.369">
+   <point/>
+  </object>
+  <object id="174" name="Gruel Flower" x="1841.73" y="2132.53">
+   <point/>
+  </object>
+  <object id="176" name="Newspaper" x="113.896" y="1068.69">
    <point/>
   </object>
  </objectgroup>

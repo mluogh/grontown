@@ -74,7 +74,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   public setUpSensingNpcs(npcs: Npc[]) {
     for (const npc of npcs) {
-      this.scene.physics.add.collider(this.sensor, npc, (player, object) => {
+      this.scene.physics.add.overlap(this.sensor, npc, (player, object) => {
         const npc = object as Npc;
         if (this.closeNpc !== npc) {
           this.closeNpc = npc as Npc;
@@ -91,17 +91,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   public setUpSensingEvidence(evidences: Evidence[]) {
     for (const evidence of evidences) {
-      this.scene.physics.add.collider(
-        this.sensor,
-        evidence,
-        (player, object) => {
-          const evidence = object as Evidence;
-          if (this.closeEvidence !== evidence) {
-            this.closeEvidence = evidence as Evidence;
-          }
+      this.scene.physics.add.overlap(this, evidence, (player, object) => {
+        const evidence = object as Evidence;
+        if (this.closeEvidence !== evidence) {
           this.closeEvidence = evidence as Evidence;
-        },
-      );
+        }
+        this.closeEvidence = evidence as Evidence;
+      });
     }
   }
 
@@ -140,7 +136,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
     if (
       !this.closeEvidence ||
-      !this.scene.physics.overlap(this.sensor, this.closeEvidence)
+      !this.scene.physics.overlap(this, this.closeEvidence)
     ) {
       this.closeEvidence = null;
     }
