@@ -15,7 +15,7 @@ import { useState } from "react";
 import evidence from "rpg/data/evidence";
 import Topics from "rpg/data/topics";
 
-export default function EvidenceModal() {
+const EvidenceModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [evidenceName, setEvidenceName] = useState("");
   const [text, setText] = useState("");
@@ -42,10 +42,17 @@ export default function EvidenceModal() {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={close} isCentered>
-      <Card width="100%" height="100%" fontFamily={"ptserif"}>
+    <>
+      <Modal isOpen={isOpen} onClose={close} isCentered>
         <ModalOverlay />
-        <ModalContent maxW="fit-content" maxH={"fit-content"} onClick={close}>
+        <ModalContent
+          maxW="fit-content"
+          maxH={"fit-content"}
+          onClick={close}
+          boxShadow={"none"}
+          border={"none"}
+          outline={"none"}
+        >
           <ModalBody>
             <HStack
               width={"80vw"}
@@ -95,7 +102,9 @@ export default function EvidenceModal() {
             </HStack>
           </ModalBody>
         </ModalContent>
-      </Card>
-    </Modal>
+      </Modal>
+    </>
   );
 }
+
+export default EvidenceModal;
