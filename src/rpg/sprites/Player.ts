@@ -25,6 +25,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   closeNpc: Npc | null = null;
   closeEvidence: Evidence | null = null;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+  WKey: Phaser.Input.Keyboard.Key;
+  AKey: Phaser.Input.Keyboard.Key;
+  SKey: Phaser.Input.Keyboard.Key;
+  DKey: Phaser.Input.Keyboard.Key;
   interactText: Phaser.GameObjects.Text;
 
   constructor(
@@ -59,6 +63,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Add cursor keys
     this.cursors = scene.input.keyboard!.createCursorKeys();
+    this.WKey = scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.AKey = scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.SKey = scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.DKey = scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+    
 
     // Create sprite animations
     this.createAnimations();
@@ -160,22 +170,22 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Horizontal movement
     switch (true) {
-      case this.cursors.left.isDown:
+      case this.cursors.left.isDown || this.AKey.isDown:
         this.body.setVelocityX(-Velocity.Horizontal);
         break;
 
-      case this.cursors.right.isDown:
+      case this.cursors.right.isDown|| this.DKey.isDown:
         this.body.setVelocityX(Velocity.Horizontal);
         break;
     }
 
     // Vertical movement
     switch (true) {
-      case this.cursors.up.isDown:
+      case this.cursors.up.isDown || this.WKey.isDown:
         this.body.setVelocityY(-Velocity.Vertical);
         break;
 
-      case this.cursors.down.isDown:
+      case this.cursors.down.isDown || this.SKey.isDown:
         this.body.setVelocityY(Velocity.Vertical);
         break;
     }
@@ -190,19 +200,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Update the animation last and give left/right animations precedence over up/down animations
     switch (true) {
-      case this.cursors.left.isDown:
+      case this.cursors.left.isDown || this.AKey.isDown:
         this.anims.play(Animation.Left, true);
         break;
 
-      case this.cursors.right.isDown:
+      case this.cursors.right.isDown || this.DKey.isDown:
         this.anims.play(Animation.Right, true);
         break;
 
-      case this.cursors.up.isDown:
+      case this.cursors.up.isDown || this.WKey.isDown:
         this.anims.play(Animation.Up, true);
         break;
 
-      case this.cursors.down.isDown:
+      case this.cursors.down.isDown || this.SKey.isDown:
         this.anims.play(Animation.Down, true);
         break;
 

@@ -104,7 +104,7 @@ export default function FoundEvidenceModal(props: FoundEvidenceModalProps) {
                           evidence[evidenceKey as keyof typeof evidence].photo
                         }
                       />
-                      <Text fontSize={"xl"}>
+                      <Text fontSize={"xl"} whiteSpace="pre-wrap">
                         {evidence[evidenceKey as keyof typeof evidence].text}
                       </Text>
                     </AccordionPanel>
