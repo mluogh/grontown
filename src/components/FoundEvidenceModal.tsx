@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import evidence from "rpg/data/evidence";
+import StorageKeys from "rpg/data/persistence";
 import Topics from "rpg/data/topics";
 
 function CroppedImage({ imgSrc }: { imgSrc: string }) {
@@ -54,7 +55,9 @@ export default function FoundEvidenceModal(props: FoundEvidenceModalProps) {
 
   const open = () => {
     PubSub.publish(Topics.giveKeysToDom);
-    setFoundEvidence(JSON.parse(localStorage.getItem("evidence")!));
+    setFoundEvidence(
+      JSON.parse(localStorage.getItem(StorageKeys.FoundEvidence)!),
+    );
     onOpen();
   };
 

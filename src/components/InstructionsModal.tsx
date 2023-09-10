@@ -14,7 +14,9 @@ import {
   Center,
   HStack,
 } from "@chakra-ui/react";
+import { useEffect } from "react";
 import Topics from "rpg/data/topics";
+import { isProduction } from "rpg/utils";
 
 export default function InstructionsModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -28,6 +30,14 @@ export default function InstructionsModal() {
     PubSub.publish(Topics.giveKeysToGame);
     onClose();
   };
+
+  // Open this once when game starts.
+  useEffect(() => {
+    if (isProduction) {
+      open();
+    }
+    open();
+  }, []);
 
   return (
     <>

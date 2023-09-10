@@ -4,7 +4,6 @@ const scene = {
 } as const;
 
 const tilemap = {
-  tuxemon: "tuxemon",
   town: "town",
 } as const;
 

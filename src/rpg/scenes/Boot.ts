@@ -38,11 +38,6 @@ export default class Boot extends Phaser.Scene {
       this.load.image(value.sprite, `assets/sprites/${value.sprite}.png`);
     }
 
-    this.load.tilemapTiledJSON(
-      key.tilemap.tuxemon,
-      "assets/tilemaps/tuxemon-town.json",
-    );
-
     for (const tileset of Object.values(key.tileset)) {
       this.load.image(tileset, `assets/tilesets/${tileset}.png`);
     }
