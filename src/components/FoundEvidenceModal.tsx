@@ -56,7 +56,7 @@ export default function FoundEvidenceModal(props: FoundEvidenceModalProps) {
   const open = () => {
     PubSub.publish(Topics.giveKeysToDom);
     setFoundEvidence(
-      JSON.parse(localStorage.getItem(StorageKeys.FoundEvidence)!),
+      JSON.parse(localStorage.getItem(StorageKeys.FoundEvidence) || "[]"),
     );
     onOpen();
   };
