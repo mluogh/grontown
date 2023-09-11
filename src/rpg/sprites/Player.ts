@@ -18,6 +18,13 @@ const Velocity = {
   Vertical: 250,
 } as const;
 
+type WASD = {
+  WKey: Phaser.Input.Keyboard.Key,
+  AKey: Phaser.Input.Keyboard.Key,
+  SKey: Phaser.Input.Keyboard.Key,
+  DKey: Phaser.Input.Keyboard.Key
+};
+
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   body!: Phaser.Physics.Arcade.Body;
   sensor: Phaser.Physics.Arcade.Sprite;
@@ -25,10 +32,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   closeNpc: Npc | null = null;
   closeEvidence: Evidence | null = null;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
-  WKey: Phaser.Input.Keyboard.Key;
-  AKey: Phaser.Input.Keyboard.Key;
-  SKey: Phaser.Input.Keyboard.Key;
-  DKey: Phaser.Input.Keyboard.Key;
+  WASDKeys: WASD;
   interactText: Phaser.GameObjects.Text;
 
   constructor(
@@ -63,12 +67,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Add cursor keys
     this.cursors = scene.input.keyboard!.createCursorKeys();
-    this.WKey = scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-    this.AKey = scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-    this.SKey = scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-    this.DKey = scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-
-    
+    this.WASDKeys = scene.input.keyboard!.addKeys({
+      WKey: Phaser.Input.Keyboard.KeyCodes.W,
+      AKey: Phaser.Input.Keyboard.KeyCodes.A,
+      SKey: Phaser.Input.Keyboard.KeyCodes.S,
+      DKey: Phaser.Input.Keyboard.KeyCodes.D
+    }) as WASD;
 
     // Create sprite animations
     this.createAnimations();
@@ -155,7 +159,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       PubSub.publish(this.closeNpc.interactTopic, this.closeNpc.eastworldId);
       PubSub.publish(topics.giveKeysToDom, this.closeNpc.eastworldId);
       // This needs to be reset or isDown gets stuck when we disable keyboard input later on
-      this.cursors.space.reset();
+      Object.values(this.cursors).forEach((value) => 
+        value.reset()
+      )
+      Object.values(this.WASDKeys).forEach((value) => 
+        value.reset()
+      )
     }
 
     if (this.cursors.space.isDown && this.closeEvidence) {
@@ -165,27 +174,32 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       );
       PubSub.publish(topics.giveKeysToDom);
       // This needs to be reset or isDown gets stuck when we disable keyboard input later on
-      this.cursors.space.reset();
+      Object.values(this.cursors).forEach((value) => 
+        value.reset()
+      )
+      Object.values(this.WASDKeys).forEach((value) => 
+        value.reset()
+      )
     }
 
     // Horizontal movement
     switch (true) {
-      case this.cursors.left.isDown || this.AKey.isDown:
+      case this.cursors.left.isDown || this.WASDKeys.AKey.isDown:
         this.body.setVelocityX(-Velocity.Horizontal);
         break;
 
-      case this.cursors.right.isDown|| this.DKey.isDown:
+      case this.cursors.right.isDown|| this.WASDKeys.DKey.isDown:
         this.body.setVelocityX(Velocity.Horizontal);
         break;
     }
 
     // Vertical movement
     switch (true) {
-      case this.cursors.up.isDown || this.WKey.isDown:
+      case this.cursors.up.isDown || this.WASDKeys.WKey.isDown:
         this.body.setVelocityY(-Velocity.Vertical);
         break;
 
-      case this.cursors.down.isDown || this.SKey.isDown:
+      case this.cursors.down.isDown || this.WASDKeys.SKey.isDown:
         this.body.setVelocityY(Velocity.Vertical);
         break;
     }
@@ -200,19 +214,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Update the animation last and give left/right animations precedence over up/down animations
     switch (true) {
-      case this.cursors.left.isDown || this.AKey.isDown:
+      case this.cursors.left.isDown || this.WASDKeys.AKey.isDown:
         this.anims.play(Animation.Left, true);
         break;
 
-      case this.cursors.right.isDown || this.DKey.isDown:
+      case this.cursors.right.isDown || this.WASDKeys.DKey.isDown:
         this.anims.play(Animation.Right, true);
         break;
 
-      case this.cursors.up.isDown || this.WKey.isDown:
+      case this.cursors.up.isDown || this.WASDKeys.WKey.isDown:
         this.anims.play(Animation.Up, true);
         break;
 
-      case this.cursors.down.isDown || this.SKey.isDown:
+      case this.cursors.down.isDown || this.WASDKeys.SKey.isDown:
         this.anims.play(Animation.Down, true);
         break;
 
