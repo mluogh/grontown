@@ -23,7 +23,7 @@ export const GameManager = () => {
   const [sessionId, setSessionId] = useState<string>();
   const [notes, setNotes] = useState<string>("");
   const eastworldClient = new EastworldClient({
-    BASE: "http://localhost:8000",
+    BASE: process.env.EASTWORLD_API_URL || "http://localhost:8000",
   });
   useEffect(() => {
     const fetchSession = async () => {
