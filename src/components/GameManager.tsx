@@ -16,6 +16,7 @@ import { Game } from "./Game";
 import NotesModal from "./Notes";
 import PoliceModal from "./PoliceModal";
 import FoundEvidenceModal from "./FoundEvidenceModal";
+import InstructionsModal from "./InstructionsModal";
 
 // This wrapper mostly exists so the Phaser component in Game.tsx doesn't get re-rendered.
 export const GameManager = () => {
@@ -59,6 +60,7 @@ export const GameManager = () => {
               <VStack width={"90%"} gap={5}>
                 <FoundEvidenceModal notes={notes} setNotes={setNotes} />
                 <NotesModal notes={notes} setNotes={setNotes} />
+                <InstructionsModal />
               </VStack>
             </Flex>
           </HStack>
