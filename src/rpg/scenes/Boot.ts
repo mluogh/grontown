@@ -1,5 +1,3 @@
-import { Textures, Scene } from "phaser";
-
 import { key } from "../data";
 import characters from "rpg/data/characters";
 import evidence from "rpg/data/evidence";

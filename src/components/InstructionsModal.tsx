@@ -31,12 +31,11 @@ export default function InstructionsModal() {
     onClose();
   };
 
-  // Open this once when game starts.
+  // Open this once when game starts; this modal should only be created once.
   useEffect(() => {
     if (isProduction) {
       open();
     }
-    open();
   }, []);
 
   return (
