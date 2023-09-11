@@ -8,13 +8,14 @@ import {
   Image,
   VStack,
   Heading,
-  Textarea,
   Text,
   AspectRatio,
   Center,
   HStack,
 } from "@chakra-ui/react";
+import { useEffect } from "react";
 import Topics from "rpg/data/topics";
+import { isProduction } from "env";
 
 export default function InstructionsModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -28,6 +29,13 @@ export default function InstructionsModal() {
     PubSub.publish(Topics.giveKeysToGame);
     onClose();
   };
+
+  // Open this once when game starts; this modal should only be created once.
+  useEffect(() => {
+    if (isProduction) {
+      open();
+    }
+  }, []);
 
   return (
     <>

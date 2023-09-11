@@ -1,5 +1,3 @@
-import { Textures, Scene } from "phaser";
-
 import { key } from "../data";
 import characters from "rpg/data/characters";
 import evidence from "rpg/data/evidence";
@@ -37,11 +35,6 @@ export default class Boot extends Phaser.Scene {
     for (const [, value] of Object.entries(evidence)) {
       this.load.image(value.sprite, `assets/sprites/${value.sprite}.png`);
     }
-
-    this.load.tilemapTiledJSON(
-      key.tilemap.tuxemon,
-      "assets/tilemaps/tuxemon-town.json",
-    );
 
     for (const tileset of Object.values(key.tileset)) {
       this.load.image(tileset, `assets/tilesets/${tileset}.png`);

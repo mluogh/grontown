@@ -2,7 +2,7 @@ import Phaser from "phaser";
 
 import { key } from "../data";
 import { Player } from "../sprites";
-import { isProduction } from "../utils";
+import { isProduction } from "env";
 import { Npc } from "rpg/sprites/Npc";
 import Topics from "rpg/data/topics";
 import characters from "rpg/data/characters";
@@ -110,7 +110,7 @@ export default class Main extends Phaser.Scene {
         "Misc",
         object => object.name === evidence_piece,
       )!;
-      
+
       this.evidences.push(
         new Evidence(
           evidence_piece,

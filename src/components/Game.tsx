@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import Phaser from "phaser";
 import scenes from "rpg/scenes";
-import { isDevelopment, isProduction } from "rpg/utils";
+import { isDevelopment, isProduction } from "env";
 import { Box } from "@chakra-ui/react";
 
 export const Game = () => {

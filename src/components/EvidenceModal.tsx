@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import evidence from "rpg/data/evidence";
+import StorageKeys from "rpg/data/persistence";
 import Topics from "rpg/data/topics";
 
 const EvidenceModal = () => {
@@ -24,8 +25,8 @@ const EvidenceModal = () => {
   PubSub.subscribe(Topics.enterEvidenceModal, (channel, message: string) => {
     const evidenceKey = message as keyof typeof evidence;
 
-    const foundEvidence = localStorage.getItem("evidence")
-      ? new Set(JSON.parse(localStorage.getItem("evidence")!))
+    const foundEvidence = localStorage.getItem(StorageKeys.FoundEvidence)
+      ? new Set(JSON.parse(localStorage.getItem(StorageKeys.FoundEvidence)!))
       : new Set();
     foundEvidence.add(evidenceKey);
     localStorage.setItem("evidence", JSON.stringify(Array.from(foundEvidence)));
