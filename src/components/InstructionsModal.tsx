@@ -8,7 +8,6 @@ import {
   Image,
   VStack,
   Heading,
-  Textarea,
   Text,
   AspectRatio,
   Center,
@@ -16,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import Topics from "rpg/data/topics";
-import { isProduction } from "rpg/utils";
+import { isProduction } from "env";
 
 export default function InstructionsModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
