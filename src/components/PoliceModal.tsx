@@ -25,6 +25,7 @@ import { EastworldClient } from "eastworld-client";
 import { useEffect, useState } from "react";
 import story from "rpg/data/story";
 import { GameResult, ResultScreenProps } from "./ResultScreen";
+import { logEndGame } from "analytics";
 
 function capitalizeName(name: string) {
   return name
@@ -78,12 +79,14 @@ How close is this to the actual plot?
         score: score,
       };
       PubSub.publish(Topics.endGame, result);
+      logEndGame(true);
     } else {
       const result: ResultScreenProps = {
         status: GameResult.LOSS,
         suspect: capitalizeName(suspect),
       };
       PubSub.publish(Topics.endGame, result);
+      logEndGame(false);
     }
   };
 
