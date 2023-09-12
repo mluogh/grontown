@@ -30,7 +30,7 @@ type ChatModalProps = {
   sessionId: string;
   eastworldClient: EastworldClient;
   notes: string;
-  setNotes: React.Dispatch<React.SetStateAction<string>>;
+  setNotes: (notes: string) => void;
 };
 
 const ChatModal = (props: ChatModalProps) => {

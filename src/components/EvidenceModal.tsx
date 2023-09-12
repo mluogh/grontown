@@ -9,7 +9,6 @@ import {
   Text,
   Modal,
   HStack,
-  Card,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import evidence from "rpg/data/evidence";
@@ -29,7 +28,10 @@ const EvidenceModal = () => {
       ? new Set(JSON.parse(localStorage.getItem(StorageKeys.FoundEvidence)!))
       : new Set();
     foundEvidence.add(evidenceKey);
-    localStorage.setItem("evidence", JSON.stringify(Array.from(foundEvidence)));
+    localStorage.setItem(
+      StorageKeys.FoundEvidence,
+      JSON.stringify(Array.from(foundEvidence)),
+    );
 
     setEvidenceName(evidenceKey);
     setText(evidence[evidenceKey].text);
@@ -106,6 +108,6 @@ const EvidenceModal = () => {
       </Modal>
     </>
   );
-}
+};
 
 export default EvidenceModal;

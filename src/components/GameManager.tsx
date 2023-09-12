@@ -17,14 +17,21 @@ import NotesModal from "./Notes";
 import PoliceModal from "./PoliceModal";
 import FoundEvidenceModal from "./FoundEvidenceModal";
 import InstructionsModal from "./InstructionsModal";
+import ResultScreen, { ResultScreenProps } from "./ResultScreen";
+import Topics from "rpg/data/topics";
+import StorageKeys from "rpg/data/persistence";
 
 // This wrapper mostly exists so the Phaser component in Game.tsx doesn't get re-rendered.
 export const GameManager = () => {
   const [sessionId, setSessionId] = useState<string>();
-  const [notes, setNotes] = useState<string>("");
+  const [notes, setNotes] = useState<string>(
+    localStorage.getItem(StorageKeys.Notes) || "",
+  );
+  const [endResult, setEndResult] = useState<ResultScreenProps>();
   const eastworldClient = new EastworldClient({
     BASE: "/api",
   });
+
   useEffect(() => {
     const fetchSession = async () => {
       setSessionId(
@@ -36,6 +43,15 @@ export const GameManager = () => {
     fetchSession();
   }, []);
 
+  PubSub.subscribe(Topics.endGame, (_channel, endResult) => {
+    setEndResult(endResult as ResultScreenProps);
+  });
+
+  const setAndPersistNotes = (notes: string) => {
+    setNotes(notes);
+    localStorage.setItem(StorageKeys.Notes, notes);
+  };
+
   return (
     <Box height={"100vh"} width={"100vw"}>
       {!sessionId && (
@@ -43,7 +59,8 @@ export const GameManager = () => {
           <Spinner size={"xl"} />
         </Center>
       )}
-      {sessionId && (
+      {endResult && <ResultScreen {...endResult} />}
+      {!endResult && sessionId && (
         <Box width={"100vw"} height={"100vh"}>
           <HStack width={"100%"} height={"100%"} alignItems={"center"} gap={0}>
             <Box width={"90%"} maxHeight={"100vh"} height={"100%"}>
@@ -58,8 +75,11 @@ export const GameManager = () => {
               justifyContent={"center"}
             >
               <VStack width={"90%"} gap={5}>
-                <FoundEvidenceModal notes={notes} setNotes={setNotes} />
-                <NotesModal notes={notes} setNotes={setNotes} />
+                <FoundEvidenceModal
+                  notes={notes}
+                  setNotes={setAndPersistNotes}
+                />
+                <NotesModal notes={notes} setNotes={setAndPersistNotes} />
                 <InstructionsModal />
               </VStack>
             </Flex>
@@ -68,7 +88,7 @@ export const GameManager = () => {
             eastworldClient={eastworldClient}
             sessionId={sessionId}
             notes={notes}
-            setNotes={setNotes}
+            setNotes={setAndPersistNotes}
           ></ChatModal>
           <EvidenceModal></EvidenceModal>
           <PoliceModal eastworldClient={eastworldClient} />

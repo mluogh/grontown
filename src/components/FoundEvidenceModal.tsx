@@ -15,6 +15,7 @@ import {
   Heading,
   Text,
   Textarea,
+  Center,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import evidence from "rpg/data/evidence";
@@ -46,7 +47,7 @@ function CroppedImage({ imgSrc }: { imgSrc: string }) {
 
 interface FoundEvidenceModalProps {
   notes: string;
-  setNotes: React.Dispatch<React.SetStateAction<string>>;
+  setNotes: (notes: string) => void;
 }
 
 export default function FoundEvidenceModal(props: FoundEvidenceModalProps) {
@@ -93,6 +94,11 @@ export default function FoundEvidenceModal(props: FoundEvidenceModalProps) {
           <ModalBody>
             <VStack gap={4}>
               <Accordion allowToggle width={"100%"}>
+                {foundEvidence.length === 0 && (
+                  <Center>
+                    <Heading size={"xl"}>No evidence found yet.</Heading>
+                  </Center>
+                )}
                 {foundEvidence.map((evidenceKey, index) => (
                   <AccordionItem key={index} width={"100%"}>
                     <AccordionButton>
@@ -114,12 +120,14 @@ export default function FoundEvidenceModal(props: FoundEvidenceModalProps) {
                   </AccordionItem>
                 ))}
               </Accordion>
-              <Textarea
-                placeholder="Notice anything in the evidence? Write it down to yourself here."
-                value={props.notes}
-                rows={10}
-                onChange={e => props.setNotes(e.target.value)}
-              />
+              {foundEvidence.length > 0 && (
+                <Textarea
+                  placeholder="Notice anything in the evidence? Write it down to yourself here."
+                  value={props.notes}
+                  rows={10}
+                  onChange={e => props.setNotes(e.target.value)}
+                />
+              )}
             </VStack>
           </ModalBody>
         </ModalContent>
