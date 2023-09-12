@@ -20,6 +20,7 @@ import InstructionsModal from "./InstructionsModal";
 import ResultScreen, { ResultScreenProps } from "./ResultScreen";
 import Topics from "rpg/data/topics";
 import StorageKeys from "rpg/data/persistence";
+import { initGA, logStartGame } from "analytics";
 
 // This wrapper mostly exists so the Phaser component in Game.tsx doesn't get re-rendered.
 export const GameManager = () => {
@@ -40,6 +41,8 @@ export const GameManager = () => {
         ),
       );
     };
+    initGA();
+    logStartGame();
     fetchSession();
   }, []);
 
