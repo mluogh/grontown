@@ -12,7 +12,6 @@ export const initGA = () => {
 
 export const logStartGame = () => {
   if (ReactGA.isInitialized) {
-    console.log("Logging start game");
     ReactGA.event("level_start", {
       level_name: "sf",
     });
