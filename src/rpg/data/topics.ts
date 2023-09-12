@@ -4,6 +4,7 @@ enum Topics {
   enterArrestModal = "enterArrestModal",
   giveKeysToDom = "giveKeysToDom",
   giveKeysToGame = "giveKeysToGame",
+  endGame = "endGame",
 }
 
 export default Topics;

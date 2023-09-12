@@ -14,7 +14,7 @@ import Topics from "rpg/data/topics";
 
 interface NotesModalProps {
   notes: string;
-  setNotes: React.Dispatch<React.SetStateAction<string>>;
+  setNotes: (notes: string) => void;
 }
 
 const NotesModal = ({ notes, setNotes }: NotesModalProps) => {

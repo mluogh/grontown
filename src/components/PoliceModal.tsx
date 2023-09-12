@@ -24,6 +24,16 @@ import Topics from "rpg/data/topics";
 import { EastworldClient } from "eastworld-client";
 import { useEffect, useState } from "react";
 import story from "rpg/data/story";
+import { GameResult, ResultScreenProps } from "./ResultScreen";
+
+function capitalizeName(name: string) {
+  return name
+    .trim()
+    .replace(
+      /\w\S*/g,
+      word => word.charAt(0).toUpperCase() + word.substr(1).toLowerCase(),
+    );
+}
 
 type PoliceModalProps = {
   eastworldClient: EastworldClient;
@@ -36,11 +46,7 @@ const PoliceModal = ({ eastworldClient }: PoliceModalProps) => {
   const [explanation, setExplanation] = useState("");
 
   useEffect(() => {
-    let sanitizedName = suspect.trim();
-    sanitizedName = sanitizedName.replace(
-      /\w\S*/g,
-      word => word.charAt(0).toUpperCase() + word.substr(1).toLowerCase(),
-    );
+    let sanitizedName = capitalizeName(suspect);
 
     setSuspectValid(sanitizedName in characters);
   }, [suspect]);
@@ -55,8 +61,9 @@ const PoliceModal = ({ eastworldClient }: PoliceModalProps) => {
   };
 
   const scoreExplanation = async () => {
-    const score = await eastworldClient.llm.rate(
-      `A player is playing a murder mystery game as a detective.
+    if (suspect.toLocaleLowerCase() === "victoria ashford") {
+      const score = await eastworldClient.llm.rate(
+        `A player is playing a murder mystery game as a detective.
 The actual plot they should discover is as follows:
 "${story.explanation}"
 
@@ -65,8 +72,19 @@ This is the player's explanation of what happened:
 
 How close is this to the actual plot?
 `,
-    );
-    console.log(score);
+      );
+      const result: ResultScreenProps = {
+        status: GameResult.WIN,
+        score: score,
+      };
+      PubSub.publish(Topics.endGame, result);
+    } else {
+      const result: ResultScreenProps = {
+        status: GameResult.LOSS,
+        suspect: capitalizeName(suspect),
+      };
+      PubSub.publish(Topics.endGame, result);
+    }
   };
 
   return (
