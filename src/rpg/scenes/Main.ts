@@ -33,8 +33,21 @@ export default class Main extends Phaser.Scene {
     const map = this.make.tilemap({ key: key.tilemap.town });
     const tilesets = [];
 
-    for (const tileset of Object.values(key.tileset)) {
-      tilesets.push(map.addTilesetImage(tileset, tileset)!);
+    for (const [, value] of Object.entries(key.tileset)) {
+      if (value.extruded) {
+        tilesets.push(
+          map.addTilesetImage(
+            value.name,
+            value.image,
+            map.tileWidth,
+            map.tileHeight,
+            1,
+            2,
+          )!,
+        );
+      } else {
+        tilesets.push(map.addTilesetImage(value.name, value.image)!);
+      }
     }
 
     // Man, I didn't know I would have to do this for every layer...
