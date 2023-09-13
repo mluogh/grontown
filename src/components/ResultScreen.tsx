@@ -45,7 +45,7 @@ deeply offended by your conduct. He gave you the beating of your life. Of
 course, he got off scot-free. He will no longer speak to you.`;
       imgSrc = "/assets/web/electric_chair.jpeg";
       // TODO: fix hardcode string
-      getGameState().goneNpcs.add("William Harrington");
+      getGameState().nonInteractableNpcs.add("William Harrington");
       saveGameState();
       break;
     case GameResult.LOSS:

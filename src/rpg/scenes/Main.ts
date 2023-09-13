@@ -99,10 +99,8 @@ export default class Main extends Phaser.Scene {
       "Misc",
       object => object.name === "Spawn Point",
     )!;
-
     this.player = new Player(this, spawnPoint.x!, spawnPoint.y!);
 
-    // TODO: implement this
     for (const [characterName, characterDef] of Object.entries(characters)) {
       if (characterName === "detective") {
         continue;
