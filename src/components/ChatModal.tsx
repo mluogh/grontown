@@ -64,12 +64,21 @@ const ChatModal = (props: ChatModalProps) => {
       { role: Message.role.USER, content: message },
     ]);
     setMessage("");
-    const response = await props.eastworldClient.gameSessions.chat(
+    const interact = await props.eastworldClient.gameSessions.interact(
       props.sessionId,
       agentName,
       message,
     );
-    setMessageHistory(messages => [...messages, response.message]);
+    const response = interact.response;
+    if ("content" in response) {
+      setMessageHistory(messages => [...messages, response]);
+    } else {
+      close();
+      PubSub.publish(Topics.action, {
+        character: agentName,
+        action: response.action,
+      });
+    }
   };
 
   PubSub.subscribe(Topics.enterChat, (channel, message: string) => {

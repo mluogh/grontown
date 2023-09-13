@@ -10,11 +10,16 @@ import {
   Box,
   Spacer,
 } from "@chakra-ui/react";
-import StorageKeys from "rpg/data/persistence";
+import {
+  getGameState,
+  resetGameState,
+  saveGameState,
+} from "rpg/data/persistence";
 
 export enum GameResult {
   WIN,
   LOSS,
+  DEAD,
 }
 
 export interface ResultScreenProps {
@@ -25,24 +30,37 @@ export interface ResultScreenProps {
 
 const ResultScreen = (props: ResultScreenProps) => {
   let title, text, imgSrc;
-  if (props.status === GameResult.WIN) {
-    title = "Got 'em!";
-    text = `Justice has been served! After the suspect was apprehended, they 
-confessed and we were able to see how close you got to the truth! SFPD gave
-you a ${props.score!}/5 when the case was reviewed.`;
-    imgSrc = "/assets/web/justice.jpeg";
-  } else {
-    title = "Travesty!";
-    text = `${props.suspect} was sent to the electric chair, but maintained
-their innocence throughout the entire ordeal. Something is gnawing at you - 
-the real killer is still out there.`;
-    imgSrc = "/assets/web/electric_chair.jpeg";
+  switch (props.status) {
+    case GameResult.WIN:
+      title = "Got 'em!";
+      text = `Justice has been served! After the suspect was apprehended, they 
+  confessed and we were able to see how close you got to the truth! SFPD gave
+  you a ${props.score!}/5 when the case was reviewed.`;
+      imgSrc = "/assets/web/justice.jpeg";
+      break;
+    case GameResult.DEAD:
+      title = "Bruh!";
+      text = `William Harrington, with his gentlemanly sensibilities, was 
+deeply offended by your conduct. He gave you the beating of your life. Of
+course, he got off scot-free. He will no longer speak to you.`;
+      imgSrc = "/assets/web/electric_chair.jpeg";
+      // TODO: fix hardcode string
+      getGameState().goneNpcs.add("William Harrington");
+      saveGameState();
+      break;
+    case GameResult.LOSS:
+      title = "Travesty!";
+      text = `${props.suspect} was sent to the electric chair, but maintained
+  their innocence throughout the entire ordeal. Something is gnawing at you - 
+  the real killer is still out there!`;
+      imgSrc = "/assets/web/electric_chair.jpeg";
+      getGameState().goneNpcs.add(props.suspect!);
+      saveGameState();
+      break;
   }
 
   const newGame = () => {
-    for (const key of Object.values(StorageKeys)) {
-      localStorage.removeItem(key);
-    }
+    resetGameState();
     window.location.reload();
   };
 
@@ -65,6 +83,17 @@ the real killer is still out there.`;
             <HStack>
               <Button colorScheme="green" onClick={newGame}>
                 New Game
+              </Button>
+            </HStack>
+          )}
+          {props.status === GameResult.DEAD && (
+            <HStack>
+              <Button colorScheme="red" onClick={newGame}>
+                New Game
+              </Button>
+              <Spacer width={"30%"} />
+              <Button colorScheme="teal" onClick={continueGame}>
+                Leave the Hospital and Continue
               </Button>
             </HStack>
           )}
