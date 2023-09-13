@@ -18,6 +18,7 @@ export const GameManager = () => {
   const [sessionId, setSessionId] = useState<string>();
   const [notes, setNotes] = useState<string>(getGameState().notes);
   const [endResult, setEndResult] = useState<ResultScreenProps>();
+  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout>();
   const eastworldClient = new EastworldClient({
     BASE: "/api",
   });
@@ -39,14 +40,15 @@ export const GameManager = () => {
     setEndResult(endResult as ResultScreenProps);
   });
 
-  let debounceTimer: NodeJS.Timeout;
   const setAndPersistNotes = (notes: string) => {
     setNotes(notes);
     getGameState().notes = notes;
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-      saveGameState();
-    }, 300);
+    setDebounceTimer(
+      setTimeout(() => {
+        saveGameState();
+      }, 1000),
+    );
   };
 
   return (
