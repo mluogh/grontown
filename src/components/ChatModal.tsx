@@ -81,7 +81,7 @@ const ChatModal = (props: ChatModalProps) => {
     }
   };
 
-  PubSub.subscribe(Topics.enterChat, (channel, message: string) => {
+  PubSub.subscribe(Topics.enterChat, (_channel, message: string) => {
     setAgentName(message);
     setPhotoPath(characters[message as keyof typeof characters].photo);
     onOpen();

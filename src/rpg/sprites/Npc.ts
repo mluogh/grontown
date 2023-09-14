@@ -79,6 +79,7 @@ export class Npc extends Phaser.Physics.Arcade.Sprite {
   public actionCompletion = (action: string) => {
     if (!this.characterDef.actions.some(a => a.name === action)) {
       console.error(`Unknown action ${action}`);
+      return;
     }
 
     this.anims.play(action);

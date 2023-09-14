@@ -6,6 +6,7 @@ import PubSub from "pubsub-js";
 import topics from "rpg/data/topics";
 import characters from "rpg/data/characters";
 import Topics from "rpg/data/topics";
+import { GameResult, ResultScreenProps } from "components/ResultScreen";
 
 enum Animation {
   Left = "Left",
@@ -120,7 +121,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
           if (this.scene.input.keyboard) {
             this.scene.input.keyboard.enabled = false;
           }
-          setInterval(() => {}, 3000);
+          setInterval(() => {
+            const result: ResultScreenProps = {
+              status: GameResult.DEAD,
+            };
+            PubSub.publish(Topics.endGame, result);
+          }, 3000);
         }
       },
     );
