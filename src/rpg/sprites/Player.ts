@@ -106,7 +106,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   public setUpEvents(map: Phaser.Tilemaps.Tilemap) {
-    // Hacky hardcode real quick.
+    // Hacky hardcode real quick lol.
     const caning_point = map.findObject(
       "Misc",
       object => object.name === "Caning Teleport",
