@@ -13,6 +13,7 @@ enum Animation {
   Right = "Right",
   Up = "Up",
   Down = "Down",
+  Fall = "Fall",
 }
 
 const Velocity = {
@@ -118,6 +119,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
           this.x = caning_point.x!;
           this.y = caning_point.y!;
           this.setVelocity(0, 0);
+          this.anims.play(Animation.Fall);
           if (this.scene.input.keyboard) {
             this.scene.input.keyboard.enabled = false;
           }
@@ -132,24 +134,32 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     );
   }
 
-  private createAnimation(animationKey: Animation, row: number) {
+  private createAnimation(
+    animationKey: Animation,
+    row: number,
+    numFrames: number = 9,
+    frameRate: number = 16,
+    repeat: number = -1,
+  ) {
     this.anims.create({
       key: animationKey,
       frames: this.anims.generateFrameNumbers(characters.detective.sprite, {
-        // 13 is hardcoded from LPC spritesheets
-        start: 13 * row,
-        end: 13 * row + 8,
+        // 13 is hardcoded from the spritesheet
+        start: row * 9,
+        end: row * 9 + numFrames - 1,
       }),
-      frameRate: 16,
-      repeat: -1,
+      frameRate,
+      repeat,
     });
   }
+
   private createAnimations() {
     // row to directionmap hardcoded from LPC spritesheets
     this.createAnimation(Animation.Up, 0);
     this.createAnimation(Animation.Left, 1);
     this.createAnimation(Animation.Down, 2);
     this.createAnimation(Animation.Right, 3);
+    this.createAnimation(Animation.Fall, 4, 6, 3, 0);
   }
 
   update() {
@@ -246,10 +256,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         break;
 
       default:
-        const frame = this.anims.currentAnim?.frames[0].frame;
-        this.anims.stop();
+        if (this.anims.currentAnim !== this.anims.get(Animation.Fall)) {
+          const frame = this.anims.currentAnim?.frames[0].frame;
+          this.anims.stop();
 
-        this.setFrame(frame!);
+          this.setFrame(frame!);
+        }
     }
   }
 }
