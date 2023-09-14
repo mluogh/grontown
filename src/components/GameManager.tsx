@@ -1,13 +1,4 @@
-import {
-  Box,
-  Center,
-  Flex,
-  HStack,
-  Heading,
-  Image,
-  Spinner,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Center, Flex, HStack, Spinner, VStack } from "@chakra-ui/react";
 import ChatModal from "./ChatModal";
 import EvidenceModal from "./EvidenceModal";
 import { EastworldClient } from "eastworld-client";
@@ -19,16 +10,15 @@ import FoundEvidenceModal from "./FoundEvidenceModal";
 import InstructionsModal from "./InstructionsModal";
 import ResultScreen, { ResultScreenProps } from "./ResultScreen";
 import Topics from "rpg/data/topics";
-import StorageKeys from "rpg/data/persistence";
+import { getGameState, saveGameState } from "rpg/data/persistence";
 import { initGA, logStartGame } from "analytics";
 
 // This wrapper mostly exists so the Phaser component in Game.tsx doesn't get re-rendered.
 export const GameManager = () => {
   const [sessionId, setSessionId] = useState<string>();
-  const [notes, setNotes] = useState<string>(
-    localStorage.getItem(StorageKeys.Notes) || "",
-  );
+  const [notes, setNotes] = useState<string>(getGameState().notes);
   const [endResult, setEndResult] = useState<ResultScreenProps>();
+  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout>();
   const eastworldClient = new EastworldClient({
     BASE: "/api",
   });
@@ -52,7 +42,13 @@ export const GameManager = () => {
 
   const setAndPersistNotes = (notes: string) => {
     setNotes(notes);
-    localStorage.setItem(StorageKeys.Notes, notes);
+    getGameState().notes = notes;
+    clearTimeout(debounceTimer);
+    setDebounceTimer(
+      setTimeout(() => {
+        saveGameState();
+      }, 1000),
+    );
   };
 
   return (

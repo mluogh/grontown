@@ -61,7 +61,7 @@ const PoliceModal = ({ eastworldClient }: PoliceModalProps) => {
     onClose();
   };
 
-  const scoreExplanation = async () => {
+  const arrest = async () => {
     if (suspect.toLocaleLowerCase() === "victoria ashford") {
       const score = await eastworldClient.llm.rate(
         `A player is playing a murder mystery game as a detective.
@@ -187,7 +187,7 @@ How close is this to the actual plot?
                           width="100%"
                           colorScheme="red"
                           flexShrink={0}
-                          onClick={() => scoreExplanation()}
+                          onClick={() => arrest()}
                           isDisabled={!suspectValid}
                         >
                           Arrest

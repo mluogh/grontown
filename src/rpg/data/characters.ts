@@ -1,10 +1,18 @@
 import Topics from "./topics";
 
-type Character = {
+export type Action = {
+  name: string;
+  startFrame: number;
+  endFrame: number;
+  frameRate?: number;
+};
+
+export type Character = {
   eastworldId: string | null;
   sprite: string;
   photo: string;
   interactTopic: Topics;
+  actions: Array<Action>;
 };
 
 type PartialCharacter = Partial<Character>;
@@ -14,6 +22,7 @@ const defaultCharacter: Character = {
   sprite: "",
   photo: "",
   interactTopic: Topics.enterChat,
+  actions: [],
 };
 
 function createCharacter(partial: PartialCharacter): Character {
@@ -25,6 +34,14 @@ const characters: Record<string, Character> = {
     eastworldId: "Li Wei",
     sprite: "li_wei",
     photo: "assets/photos/li_wei.jpeg",
+    actions: [
+      {
+        name: "RunAway",
+        startFrame: 1,
+        endFrame: 9,
+        frameRate: 32,
+      },
+    ],
   }),
   detective: createCharacter({
     eastworldId: "Detective Samuel O'Connor",
@@ -40,6 +57,14 @@ const characters: Record<string, Character> = {
     eastworldId: "William Harrington",
     sprite: "william_harrington",
     photo: "assets/photos/william_harrington.jpeg",
+    actions: [
+      {
+        name: "Cane",
+        startFrame: 1,
+        endFrame: 7,
+        frameRate: 12,
+      },
+    ],
   }),
   "Victoria Ashford": createCharacter({
     eastworldId: "Victoria Ashford",

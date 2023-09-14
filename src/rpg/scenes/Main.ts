@@ -8,6 +8,7 @@ import Topics from "rpg/data/topics";
 import characters from "rpg/data/characters";
 import evidence from "rpg/data/evidence";
 import { Evidence } from "rpg/sprites/Evidence";
+import { getGameState } from "rpg/data/persistence";
 
 export default class Main extends Phaser.Scene {
   private player!: Player;
@@ -21,6 +22,11 @@ export default class Main extends Phaser.Scene {
   create() {
     const { map, collisionGroup } = this.createMap();
     this.createInteractables(map, collisionGroup);
+
+    this.player.setUpSensingNpcs(this.npcs);
+    this.player.setUpSensingEvidence(this.evidences);
+    this.player.setUpEvents(map);
+
     this.setupPubSub();
 
     this.renderDebug();
@@ -93,29 +99,37 @@ export default class Main extends Phaser.Scene {
       "Misc",
       object => object.name === "Spawn Point",
     )!;
-
     this.player = new Player(this, spawnPoint.x!, spawnPoint.y!);
-    for (const [character, value] of Object.entries(characters)) {
-      if (character === "detective") {
+
+    for (const [characterName, characterDef] of Object.entries(characters)) {
+      if (characterName === "detective") {
+        continue;
+      }
+      if (getGameState().goneNpcs.has(characterName)) {
         continue;
       }
       const characterSpawnPoint = map.findObject(
         "Misc",
-        object => object.name === character,
+        object => object.name === characterName,
       )!;
 
-      this.npcs.push(
-        new Npc(
-          value.eastworldId,
-          value.interactTopic,
-          this,
-          characterSpawnPoint.x!,
-          characterSpawnPoint.y!,
-          value.sprite,
-        ),
+      const npc = new Npc(
+        characterDef,
+        this,
+        characterSpawnPoint.x!,
+        characterSpawnPoint.y!,
       );
-      collisionGroup.add(this.npcs[this.npcs.length - 1]);
-      this.physics.add.collider(this.player, this.npcs[this.npcs.length - 1]);
+
+      if (getGameState().goneNpcs.has(characterName)) {
+        npc.canInteract = false;
+      }
+
+      this.npcs.push(npc);
+      collisionGroup.add(npc);
+      npc.collider = this.physics.add.collider(
+        this.player,
+        this.npcs[this.npcs.length - 1],
+      );
     }
 
     for (const [evidence_piece, value] of Object.entries(evidence)) {
@@ -137,8 +151,6 @@ export default class Main extends Phaser.Scene {
 
     // Watch the player and worldLayer for collisions
     this.physics.add.collider(this.player, collisionGroup);
-    this.player.setUpSensingNpcs(this.npcs);
-    this.player.setUpSensingEvidence(this.evidences);
   }
 
   private setupPubSub() {

@@ -5,6 +5,8 @@ import { Evidence } from "./Evidence";
 import PubSub from "pubsub-js";
 import topics from "rpg/data/topics";
 import characters from "rpg/data/characters";
+import Topics from "rpg/data/topics";
+import { GameResult, ResultScreenProps } from "components/ResultScreen";
 
 enum Animation {
   Left = "Left",
@@ -19,10 +21,10 @@ const Velocity = {
 } as const;
 
 type WASD = {
-  WKey: Phaser.Input.Keyboard.Key,
-  AKey: Phaser.Input.Keyboard.Key,
-  SKey: Phaser.Input.Keyboard.Key,
-  DKey: Phaser.Input.Keyboard.Key
+  WKey: Phaser.Input.Keyboard.Key;
+  AKey: Phaser.Input.Keyboard.Key;
+  SKey: Phaser.Input.Keyboard.Key;
+  DKey: Phaser.Input.Keyboard.Key;
 };
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
@@ -33,7 +35,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   closeEvidence: Evidence | null = null;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   WASDKeys: WASD;
-  interactText: Phaser.GameObjects.Text;
 
   constructor(
     scene: Phaser.Scene,
@@ -71,19 +72,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       WKey: Phaser.Input.Keyboard.KeyCodes.W,
       AKey: Phaser.Input.Keyboard.KeyCodes.A,
       SKey: Phaser.Input.Keyboard.KeyCodes.S,
-      DKey: Phaser.Input.Keyboard.KeyCodes.D
+      DKey: Phaser.Input.Keyboard.KeyCodes.D,
     }) as WASD;
 
     // Create sprite animations
     this.createAnimations();
 
     this.play(Animation.Right);
-
-    this.interactText = this.scene.add.text(0, 0, "[Space]", {
-      align: "center",
-      fontSize: "16px",
-    });
-    this.interactText.setAlpha(0).setDepth(100);
   }
 
   public setUpSensingNpcs(npcs: Npc[]) {
@@ -92,20 +87,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         const npc = object as Npc;
         if (this.closeNpc !== npc) {
           this.closeNpc = npc as Npc;
-          this.interactText.setAlpha(1);
-          this.interactText.setPosition(
-            npc.x - npc.width / 2,
-            npc.y - npc.height / 2 - 10,
-          );
+          this.closeNpc.toggleInteractText();
         }
-        this.closeNpc = npc as Npc;
       });
     }
   }
 
   public setUpSensingEvidence(evidences: Evidence[]) {
     for (const evidence of evidences) {
-      this.scene.physics.add.overlap(this, evidence, (player, object) => {
+      this.scene.physics.add.overlap(this, evidence, (_player, object) => {
         const evidence = object as Evidence;
         if (this.closeEvidence !== evidence) {
           this.closeEvidence = evidence as Evidence;
@@ -113,6 +103,33 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.closeEvidence = evidence as Evidence;
       });
     }
+  }
+
+  public setUpEvents(map: Phaser.Tilemaps.Tilemap) {
+    // Hacky hardcode real quick.
+    const caning_point = map.findObject(
+      "Misc",
+      object => object.name === "Caning Teleport",
+    )!;
+    PubSub.subscribe(
+      Topics.action,
+      (_channel, data: { character: string; action: string }) => {
+        if (data.action === "Cane") {
+          this.x = caning_point.x!;
+          this.y = caning_point.y!;
+          this.setVelocity(0, 0);
+          if (this.scene.input.keyboard) {
+            this.scene.input.keyboard.enabled = false;
+          }
+          setInterval(() => {
+            const result: ResultScreenProps = {
+              status: GameResult.DEAD,
+            };
+            PubSub.publish(Topics.endGame, result);
+          }, 3000);
+        }
+      },
+    );
   }
 
   private createAnimation(animationKey: Animation, row: number) {
@@ -145,8 +162,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       !this.closeNpc ||
       !this.scene.physics.overlap(this.sensor, this.closeNpc)
     ) {
+      this.closeNpc?.toggleInteractText();
       this.closeNpc = null;
-      this.interactText.setAlpha(0);
     }
     if (
       !this.closeEvidence ||
@@ -155,16 +172,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.closeEvidence = null;
     }
 
-    if (this.cursors.space.isDown && this.closeNpc) {
-      PubSub.publish(this.closeNpc.interactTopic, this.closeNpc.eastworldId);
-      PubSub.publish(topics.giveKeysToDom, this.closeNpc.eastworldId);
+    if (this.cursors.space.isDown && this.closeNpc?.canInteract) {
+      PubSub.publish(
+        this.closeNpc.characterDef.interactTopic,
+        this.closeNpc.characterDef.eastworldId,
+      );
+      PubSub.publish(
+        topics.giveKeysToDom,
+        this.closeNpc.characterDef.eastworldId,
+      );
       // This needs to be reset or isDown gets stuck when we disable keyboard input later on
-      Object.values(this.cursors).forEach((value) => 
-        value.reset()
-      )
-      Object.values(this.WASDKeys).forEach((value) => 
-        value.reset()
-      )
+      Object.values(this.cursors).forEach(value => value.reset());
+      Object.values(this.WASDKeys).forEach(value => value.reset());
     }
 
     if (this.cursors.space.isDown && this.closeEvidence) {
@@ -174,12 +193,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       );
       PubSub.publish(topics.giveKeysToDom);
       // This needs to be reset or isDown gets stuck when we disable keyboard input later on
-      Object.values(this.cursors).forEach((value) => 
-        value.reset()
-      )
-      Object.values(this.WASDKeys).forEach((value) => 
-        value.reset()
-      )
+      Object.values(this.cursors).forEach(value => value.reset());
+      Object.values(this.WASDKeys).forEach(value => value.reset());
     }
 
     // Horizontal movement
@@ -188,7 +203,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.body.setVelocityX(-Velocity.Horizontal);
         break;
 
-      case this.cursors.right.isDown|| this.WASDKeys.DKey.isDown:
+      case this.cursors.right.isDown || this.WASDKeys.DKey.isDown:
         this.body.setVelocityX(Velocity.Horizontal);
         break;
     }

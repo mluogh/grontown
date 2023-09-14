@@ -2306,8 +2306,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":574.330324498296,
-                 "y":1148.66005301022
+                 "x":574.33,
+                 "y":1148.66
                 }, 
                 {
                  "height":0,
@@ -2368,6 +2368,18 @@
                  "width":0,
                  "x":113.896,
                  "y":1068.69
+                }, 
+                {
+                 "height":0,
+                 "id":177,
+                 "name":"Caning Teleport",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1157.31785944552,
+                 "y":441.650548033527
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2376,7 +2388,7 @@
          "y":0
         }],
  "nextlayerid":17,
- "nextobjectid":177,
+ "nextobjectid":178,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",

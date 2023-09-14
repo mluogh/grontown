@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="70" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="177">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="70" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="178">
  <editorsettings>
   <export target="grontown_embedded.json" format="json"/>
  </editorsettings>
@@ -875,6 +875,9 @@
    <point/>
   </object>
   <object id="176" name="Newspaper" x="113.896" y="1068.69">
+   <point/>
+  </object>
+  <object id="177" name="Caning Teleport" x="1157.32" y="441.651">
    <point/>
   </object>
  </objectgroup>
