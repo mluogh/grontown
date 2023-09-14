@@ -120,7 +120,7 @@ export default class Main extends Phaser.Scene {
         characterSpawnPoint.y!,
       );
 
-      if (getGameState().goneNpcs.has(characterName)) {
+      if (getGameState().nonInteractableNpcs.has(characterName)) {
         npc.canInteract = false;
       }
 
