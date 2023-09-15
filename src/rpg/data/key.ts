@@ -16,47 +16,47 @@ const tileset = {
   victorianStreets: {
     name: "victorian-streets",
     image: "victorian-streets",
-    extruded: false
+    extruded: false,
   },
   victorianGarden: {
     name: "victorian-garden",
     image: "victorian-garden",
-    extruded: false
+    extruded: false,
   },
   victorianMarket: {
     name: "victorian-market",
     image: "victorian-market",
-    extruded: false
+    extruded: false,
   },
   victorianWindowsDoors: {
     name: "victorian-windows-doors",
     image: "victorian-windows-doors",
-    extruded: false
+    extruded: false,
   },
   victorianAccessories: {
     name: "victorian-accessories",
     image: "victorian-accessories",
-    extruded: false
+    extruded: false,
   },
   victorianTenement: {
     name: "victorian-tenement",
     image: "victorian-tenement",
-    extruded: false
+    extruded: false,
   },
   roofs: {
     name: "roofs",
     image: "roofs",
-    extruded: false
+    extruded: false,
   },
   terrain: {
     name: "terrain",
     image: "terrain-extruded",
-    extruded: true
+    extruded: true,
   },
   treesGreen: {
     name: "trees-green",
     image: "trees-green",
-    extruded: false
+    extruded: false,
   },
 } as const;
 

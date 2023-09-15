@@ -1,4 +1,13 @@
-import { Box, Center, Flex, HStack, Spinner, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  HStack,
+  Spacer,
+  Spinner,
+  VStack,
+} from "@chakra-ui/react";
 import ChatModal from "./ChatModal";
 import EvidenceModal from "./EvidenceModal";
 import { EastworldClient } from "eastworld-client";
@@ -12,6 +21,8 @@ import ResultScreen, { ResultScreenProps } from "./ResultScreen";
 import Topics from "rpg/data/topics";
 import { getGameState, saveGameState } from "rpg/data/persistence";
 import { initGA, logStartGame } from "analytics";
+import { StarIcon } from "@chakra-ui/icons";
+import RateLimitModal from "./RateLimitModal";
 
 // This wrapper mostly exists so the Phaser component in Game.tsx doesn't get re-rendered.
 export const GameManager = () => {
@@ -34,6 +45,7 @@ export const GameManager = () => {
     initGA();
     logStartGame();
     fetchSession();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   PubSub.subscribe(Topics.endGame, (_channel, endResult) => {
@@ -69,17 +81,32 @@ export const GameManager = () => {
             </Box>
             <Flex
               width={"10%"}
+              minWidth={"170px"}
               height={"100%"}
               alignItems={"center"}
               justifyContent={"center"}
             >
-              <VStack width={"90%"} gap={5}>
+              <VStack minWidth={"155px"} width={"90%"} gap={5} height={"100%"}>
+                <Spacer />
                 <FoundEvidenceModal
                   notes={notes}
                   setNotes={setAndPersistNotes}
                 />
                 <NotesModal notes={notes} setNotes={setAndPersistNotes} />
                 <InstructionsModal />
+                <Spacer />
+                <Button
+                  as="a"
+                  href="https://www.github.com/mluogh/grontown"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  colorScheme="purple"
+                  size={"lg"}
+                  leftIcon={<StarIcon color="yellow" />}
+                  marginBottom={5}
+                >
+                  GitHub
+                </Button>
               </VStack>
             </Flex>
           </HStack>
@@ -91,6 +118,7 @@ export const GameManager = () => {
           ></ChatModal>
           <EvidenceModal></EvidenceModal>
           <PoliceModal eastworldClient={eastworldClient} />
+          <RateLimitModal></RateLimitModal>
         </Box>
       )}
     </Box>

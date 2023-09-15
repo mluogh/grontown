@@ -1,0 +1,39 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - main
+
+name: Continuous Integration
+
+jobs:
+  client-presubmit:
+    name: client-presubmit
+    runs-on:
+      ubuntu-latest
+      # TODO: run tests
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19
+
+      # ESLint and Prettier must be in `package.json`
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      # - name: Install linters
+      #   run: |
+      #     npx install eslint
+      #     npx install prettier
+
+      - name: Lint
+        run: |
+          npx prettier . --check
+          npx eslint . --max-warnings=0
