@@ -8,6 +8,9 @@ import {
   HStack,
   Flex,
   AspectRatio,
+  Stack,
+  ChakraProvider,
+  extendTheme,
 } from "@chakra-ui/react";
 import GoogleButton from "react-google-button";
 import GithubButton from "react-github-login-button";
@@ -34,68 +37,68 @@ export const Login = () => {
     window.location.href = authorizeURL;
   };
 
-  return (
-    <Center height="100vh" width="100vw">
-      <Box
-        borderRadius="xl"
-        overflow="hidden"
-        boxShadow="lg"
-        dropShadow={"2xl"}
-      >
-        <HStack
-          spacing={0}
-          height="70vh"
-          minHeight="300px"
-          alignItems="stretch"
-        >
-          <video autoPlay loop muted style={{ width: "100%", height: "100%" }}>
-            <source src="/assets/web/gron_games.webm" type="video/webm" />
-            Your browser does not support the video tag.
-          </video>
+  const theme = extendTheme({
+    breakpoints: {
+      lg: "85em",
+    },
+  });
 
+  return (
+    <ChakraProvider theme={theme}>
+      <Center height="100vh" width="100vw">
+        <Stack
+          width="85vw"
+          alignItems="stretch"
+          borderRadius="xl"
+          overflow="hidden"
+          boxShadow="lg"
+          dropShadow={"2xl"}
+          gap={"0"}
+          direction={{ base: "column-reverse", xl: "row" }}
+        >
           <Box
             bg="blue.800"
-            p={[2, 4, 8]}
-            minWidth="400px"
+            padding={{ base: "3", xl: "4" }}
             boxShadow="xl"
-            width={["100%", "60%", "15vw"]}
             flex="1"
           >
-            <Flex flexDirection="column" height="100%" color="gray.400">
-              {/* Top Half */}
-              <VStack spacing={6} flex="1" justifyContent="center">
+            <Stack height="100%" direction={{ base: "row", xl: "column" }}>
+              <VStack
+                spacing={{ base: "2", xl: "4" }}
+                flex="1"
+                justifyContent="center"
+              >
                 <Image
                   src="/assets/sprites/dead_harrington.png"
                   height="30%"
                   width="30%"
                 />
-                <Text fontFamily="vt323" fontSize="6xl">
+                <Text fontFamily="vt323" fontSize="6xl" align={"center"}>
                   nob hill noir
                 </Text>
               </VStack>
 
-              {/* Bottom Half */}
               <VStack
-                spacing={6}
+                // padding={{base:'2', xl:'8'}}
+                spacing={{ base: "1", xl: "3" }}
                 flex="1"
                 justifyContent="center"
                 maxWidth="100%"
               >
                 <Box
-                  padding="10"
+                  padding={{ base: "2", xl: "8" }}
                   bgColor="gray.400"
                   borderRadius="md"
                   boxShadow="md"
-                  marginBottom={6}
+                  marginBottom={{ base: "1", xl: "3" }}
                   maxWidth="100%"
-                  width="100%"
+                  minWidth={"250px"}
+                  width="85%"
                   flexDirection="column"
                   display="flex"
                   alignItems="center"
-                  justifyContent="flex-start" // Center vertically at the top
+                  justifyContent="flex-start"
                 >
-                  <div style={{ marginTop: "auto" }}></div>{" "}
-                  {/* Empty div for spacing */}
                   <Text
                     fontSize="4xl"
                     color={"blue.800"}
@@ -104,7 +107,11 @@ export const Login = () => {
                   >
                     Play
                   </Text>
-                  <VStack spacing={6} fontFamily={"vt323"}>
+                  <VStack
+                    spacing={{ base: "3", xl: "6" }}
+                    fontFamily={"vt323"}
+                    marginBottom={3}
+                  >
                     <GithubButton onClick={handleGitHubLogin}>
                       Sign in with GitHub
                     </GithubButton>
@@ -114,11 +121,22 @@ export const Login = () => {
                   </VStack>
                 </Box>
               </VStack>
-            </Flex>
+            </Stack>
           </Box>
-        </HStack>
-      </Box>
-    </Center>
+          <AspectRatio flex="4" ratio={3 / 2}>
+            <video
+              autoPlay
+              loop
+              muted
+              style={{ width: "100%", height: "100%" }}
+            >
+              <source src="/assets/web/gron_games.webm" type="video/webm" />
+              Your browser does not support the video tag.
+            </video>
+          </AspectRatio>
+        </Stack>
+      </Center>
+    </ChakraProvider>
   );
 };
 
