@@ -7,6 +7,7 @@ import type { OpenAPIConfig } from './core/OpenAPI';
 import { AxiosHttpRequest } from './core/AxiosHttpRequest';
 
 import { AgentDefinitionsService } from './services/AgentDefinitionsService';
+import { AuthorizationService } from './services/AuthorizationService';
 import { GameDefinitionsService } from './services/GameDefinitionsService';
 import { GameSessionsService } from './services/GameSessionsService';
 import { LlmService } from './services/LlmService';
@@ -17,6 +18,7 @@ type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 export class EastworldClient {
 
     public readonly agentDefinitions: AgentDefinitionsService;
+    public readonly authorization: AuthorizationService;
     public readonly gameDefinitions: GameDefinitionsService;
     public readonly gameSessions: GameSessionsService;
     public readonly llm: LlmService;
@@ -38,6 +40,7 @@ export class EastworldClient {
         });
 
         this.agentDefinitions = new AgentDefinitionsService(this.request);
+        this.authorization = new AuthorizationService(this.request);
         this.gameDefinitions = new GameDefinitionsService(this.request);
         this.gameSessions = new GameSessionsService(this.request);
         this.llm = new LlmService(this.request);

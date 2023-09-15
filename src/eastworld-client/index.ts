@@ -29,6 +29,7 @@ export { Parameter } from './models/Parameter';
 export type { ValidationError } from './models/ValidationError';
 
 export { AgentDefinitionsService } from './services/AgentDefinitionsService';
+export { AuthorizationService } from './services/AuthorizationService';
 export { GameDefinitionsService } from './services/GameDefinitionsService';
 export { GameSessionsService } from './services/GameSessionsService';
 export { LlmService } from './services/LlmService';

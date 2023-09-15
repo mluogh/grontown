@@ -12,6 +12,8 @@ const theme = extendTheme({
     // pacifico: "Pacifico, handwriting", // Your custom font
     ptserif: "PT Serif, serif",
     cursive: "Pinyon Script, handwriting",
+    vt323: "VT323, monospace",
+    
   },
   // styles: {
   //   global: (props: StyleFunctionProps) => ({
