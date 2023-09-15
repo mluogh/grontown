@@ -64,11 +64,16 @@ const ChatModal = (props: ChatModalProps) => {
       { role: Message.role.USER, content: message },
     ]);
     setMessage("");
-    const interact = await props.eastworldClient.gameSessions.interact(
-      props.sessionId,
-      agentName,
-      message,
-    );
+    let interact;
+    try {
+      interact = await props.eastworldClient.gameSessions.interact(
+        props.sessionId,
+        agentName,
+        message,
+      );
+    } catch (e) {
+      return;
+    }
     const response = interact.response;
     if ("content" in response) {
       setMessageHistory(messages => [...messages, response]);
