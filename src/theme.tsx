@@ -6,7 +6,6 @@ const theme = extendTheme({
     ptserif: "PT Serif, serif",
     cursive: "Pinyon Script, handwriting",
     vt323: "VT323, monospace",
-    
   },
 
   config: {
