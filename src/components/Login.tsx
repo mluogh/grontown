@@ -7,6 +7,7 @@ import {
   Text,
   HStack,
   Flex,
+  AspectRatio,
 } from "@chakra-ui/react";
 import GoogleButton from "react-google-button";
 import GithubButton from "react-github-login-button";
@@ -35,29 +36,30 @@ export const Login = () => {
 
   return (
     <Center height="100vh" width="100vw">
-      <Box borderRadius="xl" overflow="hidden" boxShadow="lg" dropShadow={"2xl"}>
-        <Flex
-          direction="row"
-          alignItems="stretch"
+      <Box
+        borderRadius="xl"
+        overflow="hidden"
+        boxShadow="lg"
+        dropShadow={"2xl"}
+      >
+        <HStack
+          spacing={0}
           height="70vh"
-          minHeight={"300px"}
+          minHeight="300px"
+          alignItems="stretch"
         >
-          {/* Image on the left */}
-          <Image
-            src="/assets/web/justice.jpeg"
-            alt="Descriptive Alt Text"
-            height="100%"
-            objectFit="cover" // Spacing between the image and the buttons
-            flex="1"
-          />
+          <video autoPlay loop muted style={{ width: "100%", height: "100%" }}>
+            <source src="/assets/web/gron_games.webm" type="video/webm" />
+            Your browser does not support the video tag.
+          </video>
 
-          {/* Panel with a background color on the right */}
           <Box
             bg="blue.800"
             p={[2, 4, 8]}
             minWidth="400px"
             boxShadow="xl"
             width={["100%", "60%", "15vw"]}
+            flex="1"
           >
             <Flex flexDirection="column" height="100%" color="gray.400">
               {/* Top Half */}
@@ -114,7 +116,7 @@ export const Login = () => {
               </VStack>
             </Flex>
           </Box>
-        </Flex>
+        </HStack>
       </Box>
     </Center>
   );
