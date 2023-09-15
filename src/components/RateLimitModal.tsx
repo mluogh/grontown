@@ -16,7 +16,6 @@ import axios from "axios";
 const RateLimitModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // Initialize Axios interceptor
   axios.interceptors.response.use(
     response => {
       return response;
