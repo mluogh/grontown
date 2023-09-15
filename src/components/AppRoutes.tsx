@@ -8,7 +8,7 @@ const RedirectToLogin = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate('/login');
+    navigate('/');
   }, [navigate]);
 
   return null;
@@ -32,7 +32,6 @@ const AppRoutes = () => {
   });
 
   useEffect(() => {
-    // This function checks with the backend if the user is authenticated
     if (!isAuthenticated) {
       async function checkAuthentication() {
         try {
@@ -42,7 +41,7 @@ const AppRoutes = () => {
             navigate('/game');
           } else {
             setIsAuthenticated(false);
-            navigate('/login');
+            navigate('/');
           }
         } catch (error) {
           console.error("Failed to check authentication", error);
@@ -55,7 +54,7 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      <Route path="/login" element={!isAuthenticated ? <Login /> : <RedirectToGame/>}></Route>
+      <Route path="/" element={!isAuthenticated ? <Login /> : <RedirectToGame/>}></Route>
       <Route path="/game" element={isAuthenticated ? <GameManager /> : <RedirectToLogin />} />
       <Route path="*" element={isAuthenticated ? <RedirectToGame/>: <RedirectToLogin />} /> {/* Catch-all route */}
     </Routes>

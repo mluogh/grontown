@@ -1,12 +1,9 @@
 import {
   Box,
-  Button,
   Image,
   VStack,
   Center,
   Text,
-  HStack,
-  Flex,
   AspectRatio,
   Stack,
   ChakraProvider,
@@ -18,7 +15,7 @@ import GithubButton from "react-github-login-button";
 export const Login = () => {
   const handleGitHubLogin = async () => {
     // Define the URI to which you want the server to redirect after successful authentication
-    const clientRedirectURI = `${window.location.origin}/login`;
+    const clientRedirectURI = `${window.location.origin}/`;
 
     // Construct the authorization URL with the client_redirect_uri parameter
     const authorizeURL = `/api/auth/github_authorize?client_redirect_uri=${clientRedirectURI}`;
@@ -28,7 +25,7 @@ export const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    const clientRedirectURI = `${window.location.origin}/login`;
+    const clientRedirectURI = `${window.location.origin}/`;
 
     // Construct the authorization URL with the client_redirect_uri parameter
     const authorizeURL = `/api/auth/google_authorize?client_redirect_uri=${clientRedirectURI}`;
@@ -79,7 +76,6 @@ export const Login = () => {
               </VStack>
 
               <VStack
-                // padding={{base:'2', xl:'8'}}
                 spacing={{ base: "1", xl: "3" }}
                 flex="1"
                 justifyContent="center"
