@@ -100,8 +100,8 @@ export class GameSessionsService {
     public startChat(
         sessionUuid: string,
         agent: string,
-        correspondent: string,
-        requestBody: Body_start_chat,
+        correspondent?: string,
+        requestBody?: Body_start_chat,
     ): CancelablePromise<any> {
         return this.httpRequest.request({
             method: 'POST',
