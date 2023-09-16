@@ -249,7 +249,7 @@ const ChatModal = (props: ChatModalProps) => {
                   <Textarea
                     size={"lg"}
                     resize={"none"}
-                    rows={10}
+                    rows={5}
                     placeholder="Jot down some notes here..."
                     value={props.notes}
                     onChange={e => props.setNotes(e.target.value)}

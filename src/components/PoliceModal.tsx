@@ -49,7 +49,9 @@ const PoliceModal = ({ eastworldClient }: PoliceModalProps) => {
   useEffect(() => {
     let sanitizedName = capitalizeName(suspect);
 
-    setSuspectValid(sanitizedName in characters);
+    setSuspectValid(
+      sanitizedName in characters && characters[sanitizedName].arrestable,
+    );
   }, [suspect]);
 
   PubSub.subscribe(Topics.enterArrestModal, () => {

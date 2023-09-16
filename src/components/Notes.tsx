@@ -9,6 +9,7 @@ import {
   VStack,
   Heading,
   Textarea,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import Topics from "rpg/data/topics";
 
@@ -18,6 +19,9 @@ interface NotesModalProps {
 }
 
 const NotesModal = ({ notes, setNotes }: NotesModalProps) => {
+  const [isSmallScreen] = useMediaQuery(
+    "(max-height: 600px) or (max-width: 80em)",
+  );
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const open = () => {
@@ -48,7 +52,7 @@ const NotesModal = ({ notes, setNotes }: NotesModalProps) => {
             alt="button image"
             width={"100%"}
           />
-          <Heading size="lg">Notes</Heading>
+          {!isSmallScreen && <Heading size="lg">Notes</Heading>}
         </VStack>
       </Box>
       <Modal isOpen={isOpen} onClose={close} isCentered>
