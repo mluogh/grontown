@@ -15,6 +15,7 @@ import {
   resetGameState,
   saveGameState,
 } from "rpg/data/persistence";
+import CroppedImage from "./util/CroppedImage";
 
 export enum GameResult {
   WIN,
@@ -74,7 +75,7 @@ course, he got off scot-free. He will no longer speak to you.`;
         <VStack gap={15}>
           <Heading size={"4xl"}>{title}</Heading>
           <AspectRatio width={"60vh"} maxW={"1024px"} ratio={1 / 1}>
-            <Image src={imgSrc}></Image>
+            <CroppedImage imgSrc={imgSrc}></CroppedImage>
           </AspectRatio>
           <Text width={"50%"} fontSize={"xl"}>
             {text}
