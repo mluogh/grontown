@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import GoogleButton from "react-google-button";
 import GithubButton from "react-github-login-button";
+import { BrowserView, MobileView } from "react-device-detect";
 
 export const Login = () => {
   const handleGitHubLogin = async () => {
@@ -99,12 +100,19 @@ export const Login = () => {
                   fontFamily={"vt323"}
                   marginBottom={3}
                 >
-                  <GithubButton onClick={handleGitHubLogin}>
-                    Sign in with GitHub
-                  </GithubButton>
-                  <GoogleButton onClick={handleGoogleLogin}>
-                    Sign in with Google
-                  </GoogleButton>
+                  <BrowserView>
+                    <GithubButton onClick={handleGitHubLogin}>
+                      Sign in with GitHub
+                    </GithubButton>
+                    <GoogleButton onClick={handleGoogleLogin}>
+                      Sign in with Google
+                    </GoogleButton>
+                  </BrowserView>
+                  <MobileView>
+                    <Text fontSize={"2xl"}>
+                      Demo requires keyboard. Use computer to play!
+                    </Text>
+                  </MobileView>
                 </VStack>
               </Box>
             </VStack>
