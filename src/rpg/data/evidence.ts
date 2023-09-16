@@ -9,7 +9,7 @@ const evidence = {
     photo: "assets/photos/poisoned_glass.jpeg",
     sprite: "poisoned_glass",
   },
-  "Letter": {
+  Letter: {
     text: `Dearest Li,
 
     It was my pleasure to meet you yesterday at the workers rally. I was so inspired by your passion for your fellow hardworking workers. I must say I have never met anyone quite like you; I would love to chat more over a cup of tea perhaps?
@@ -28,14 +28,14 @@ Your banker and dear friend,
 Reggie Archibald
     `,
     photo: "assets/photos/debt.jpeg",
-    sprite: "contract"
+    sprite: "contract",
   },
   "Gruel Flower": {
     text: "Gruel Flower, a rare herb that only grows naturally in some parts of China.",
     photo: "assets/photos/gruel_flower.jpeg",
-    sprite: "flower"
+    sprite: "flower",
   },
-  "Newspaper": {
+  Newspaper: {
     text: `
 WEALTHY HEIR EXPOSED! 
 
@@ -44,7 +44,7 @@ William Harrington seen in Chinatown brothel! What does this mean for Harrington
 ...
     `,
     photo: "assets/photos/newspaper.jpeg",
-    sprite: "newspaper"
+    sprite: "newspaper",
   },
 };
 

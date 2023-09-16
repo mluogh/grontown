@@ -12,7 +12,6 @@ export class Evidence extends Phaser.Physics.Arcade.Sprite {
     texture: string,
     frame = 0,
   ) {
-    
     super(scene, x, y, texture, frame);
     this.evidence_name = evidence_name;
     this.scene = scene;
@@ -23,8 +22,8 @@ export class Evidence extends Phaser.Physics.Arcade.Sprite {
     this.setImmovable(true);
 
     // The image has a bit of whitespace so use setOffset
-    const width = this.texture.getSourceImage().width
-    const height = this.texture.getSourceImage().height
+    const width = this.texture.getSourceImage().width;
+    const height = this.texture.getSourceImage().height;
     this.setSize(width, height);
   }
 }

@@ -1,4 +1,5 @@
-import Boot from './Boot';
-import Main from './Main';
+import Main from "./Main";
+import Boot from "./Boot";
 
-export default [Boot, Main];
+const scenes = [Boot, Main];
+export default scenes;

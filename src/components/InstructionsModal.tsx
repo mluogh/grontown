@@ -33,9 +33,10 @@ export default function InstructionsModal() {
   // Open this once when game starts; this modal should only be created once.
   useEffect(() => {
     if (isProduction) {
-      open();
+      PubSub.publish(Topics.giveKeysToDom);
+      onOpen();
     }
-  }, []);
+  }, [onOpen]);
 
   return (
     <>

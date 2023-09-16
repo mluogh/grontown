@@ -45,6 +45,7 @@ export const GameManager = () => {
     initGA();
     logStartGame();
     fetchSession();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   PubSub.subscribe(Topics.endGame, (_channel, endResult) => {

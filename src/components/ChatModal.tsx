@@ -18,11 +18,10 @@ import {
   Input,
   FormControl,
   Textarea,
-  Spacer,
 } from "@chakra-ui/react";
 import characters from "rpg/data/characters";
 import Topics from "rpg/data/topics";
-import { EastworldClient, GameDef, Message } from "eastworld-client";
+import { EastworldClient, Message } from "eastworld-client";
 import { useEffect, useRef, useState } from "react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 
@@ -56,7 +55,7 @@ const ChatModal = (props: ChatModalProps) => {
       characters.detective.eastworldId!,
       { history: [], conversation: {} },
     );
-  }, [agentName]);
+  }, [agentName, props.eastworldClient, props.sessionId]);
 
   const chat = async (message: string) => {
     setMessageHistory(messages => [

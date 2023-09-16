@@ -39,7 +39,10 @@
     "generate-eastworld": "openapi --input http://127.0.0.1:8000/openapi.json --output ./src/eastworld-client --client axios --name EastworldClient"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [

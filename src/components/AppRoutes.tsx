@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { GameManager } from "components/GameManager";
 import Login from "components/Login";
 import { EastworldClient } from "eastworld-client";
@@ -8,7 +8,7 @@ const RedirectToLogin = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate('/');
+    navigate("/");
   }, [navigate]);
 
   return null;
@@ -18,7 +18,7 @@ const RedirectToGame = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate('/game');
+    navigate("/game");
   }, [navigate]);
 
   return null;
@@ -38,10 +38,10 @@ const AppRoutes = () => {
           const response = await eastworldClient.authorization.check();
           if (response.isAuthenticated) {
             setIsAuthenticated(true);
-            navigate('/game');
+            navigate("/game");
           } else {
             setIsAuthenticated(false);
-            navigate('/');
+            navigate("/");
           }
         } catch (error) {
           console.error("Failed to check authentication", error);
@@ -54,9 +54,19 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      <Route path="/" element={!isAuthenticated ? <Login /> : <RedirectToGame/>}></Route>
-      <Route path="/game" element={isAuthenticated ? <GameManager /> : <RedirectToLogin />} />
-      <Route path="*" element={isAuthenticated ? <RedirectToGame/>: <RedirectToLogin />} /> {/* Catch-all route */}
+      <Route
+        path="/"
+        element={!isAuthenticated ? <Login /> : <RedirectToGame />}
+      ></Route>
+      <Route
+        path="/game"
+        element={isAuthenticated ? <GameManager /> : <RedirectToLogin />}
+      />
+      <Route
+        path="*"
+        element={isAuthenticated ? <RedirectToGame /> : <RedirectToLogin />}
+      />{" "}
+      {/* Catch-all route */}
     </Routes>
   );
 };
