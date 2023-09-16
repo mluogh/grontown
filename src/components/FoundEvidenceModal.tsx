@@ -16,6 +16,7 @@ import {
   Text,
   Textarea,
   Center,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import evidence from "rpg/data/evidence";
@@ -51,6 +52,9 @@ interface FoundEvidenceModalProps {
 }
 
 export default function FoundEvidenceModal(props: FoundEvidenceModalProps) {
+  const [isSmallScreen] = useMediaQuery(
+    "(max-height: 600px) or (max-width: 80em)",
+  );
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [foundEvidence, setFoundEvidence] = useState<string[]>([]);
 
@@ -83,7 +87,7 @@ export default function FoundEvidenceModal(props: FoundEvidenceModalProps) {
             alt="button image"
             width={"100%"}
           />
-          <Heading size="lg">Evidence</Heading>
+          {!isSmallScreen && <Heading size="lg">Clues</Heading>}
         </VStack>
       </Box>
       <Modal isOpen={isOpen} onClose={close} isCentered size={"2xl"}>

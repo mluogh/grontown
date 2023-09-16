@@ -81,12 +81,11 @@ export const GameManager = () => {
             </Box>
             <Flex
               width={"10%"}
-              minWidth={"170px"}
               height={"100%"}
               alignItems={"center"}
               justifyContent={"center"}
             >
-              <VStack minWidth={"155px"} width={"90%"} gap={5} height={"100%"}>
+              <VStack width={"90%"} gap={5} height={"100%"}>
                 <Spacer />
                 <FoundEvidenceModal
                   notes={notes}
@@ -101,7 +100,7 @@ export const GameManager = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   colorScheme="purple"
-                  size={"lg"}
+                  size={{ base: "sm", xl: "lg" }}
                   leftIcon={<StarIcon color="yellow" />}
                   marginBottom={5}
                 >

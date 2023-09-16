@@ -13,6 +13,7 @@ export type Character = {
   photo: string;
   interactTopic: Topics;
   actions: Array<Action>;
+  arrestable: boolean;
 };
 
 type PartialCharacter = Partial<Character>;
@@ -23,6 +24,7 @@ const defaultCharacter: Character = {
   photo: "",
   interactTopic: Topics.enterChat,
   actions: [],
+  arrestable: true,
 };
 
 function createCharacter(partial: PartialCharacter): Character {
@@ -47,6 +49,7 @@ const characters: Record<string, Character> = {
     eastworldId: "Detective Samuel O'Connor",
     sprite: "detective",
     photo: "assets/photos/detective.jpeg",
+    arrestable: false,
   }),
   "Mei Lin": createCharacter({
     eastworldId: "Mei Lin",
@@ -90,6 +93,7 @@ const characters: Record<string, Character> = {
     sprite: "police_officer",
     photo: "assets/photos/police_chief.jpeg",
     interactTopic: Topics.enterArrestModal,
+    arrestable: false,
   }),
 };
 

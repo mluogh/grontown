@@ -12,12 +12,16 @@ import {
   AspectRatio,
   Center,
   HStack,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import Topics from "rpg/data/topics";
 import { isProduction } from "env";
 
 export default function InstructionsModal() {
+  const [isSmallScreen] = useMediaQuery(
+    "(max-height: 600px) or (max-width: 80em)",
+  );
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const open = () => {
@@ -56,7 +60,7 @@ export default function InstructionsModal() {
             alt="button image"
             width={"100%"}
           />
-          <Heading size="lg">Info</Heading>
+          {!isSmallScreen && <Heading size="lg">Info</Heading>}
         </VStack>
       </Box>
       <Modal isOpen={isOpen} onClose={close} isCentered size={"6xl"}>

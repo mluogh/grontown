@@ -39,11 +39,11 @@ const ResultScreen = (props: ResultScreenProps) => {
       imgSrc = "/assets/web/justice.jpeg";
       break;
     case GameResult.DEAD:
-      title = "Bruh!";
+      title = "Beaten Senseless!";
       text = `William Harrington, with his gentlemanly sensibilities, was 
 deeply offended by your conduct. He gave you the beating of your life. Of
 course, he got off scot-free. He will no longer speak to you.`;
-      imgSrc = "/assets/web/electric_chair.jpeg";
+      imgSrc = "/assets/web/hospital.jpeg";
       // TODO: fix hardcode string
       getGameState().nonInteractableNpcs.add("William Harrington");
       saveGameState();
@@ -73,7 +73,7 @@ course, he got off scot-free. He will no longer speak to you.`;
       <Center width={"100%"} height={"100%"}>
         <VStack gap={15}>
           <Heading size={"4xl"}>{title}</Heading>
-          <AspectRatio width={"50%"} maxW={"1024px"} ratio={1 / 1}>
+          <AspectRatio width={"60vh"} maxW={"1024px"} ratio={1 / 1}>
             <Image src={imgSrc}></Image>
           </AspectRatio>
           <Text width={"50%"} fontSize={"xl"}>
