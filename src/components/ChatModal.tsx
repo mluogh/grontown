@@ -55,7 +55,8 @@ const ChatModal = (props: ChatModalProps) => {
       characters.detective.eastworldId!,
       { history: [], conversation: {} },
     );
-  }, [agentName, props.eastworldClient, props.sessionId]);
+    //  eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [agentName]);
 
   const chat = async (message: string) => {
     setMessageHistory(messages => [
