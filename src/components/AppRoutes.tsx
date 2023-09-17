@@ -50,7 +50,9 @@ const AppRoutes = () => {
 
       checkAuthentication();
     }
-  }, [navigate, eastworldClient.authorization]);
+    // TODO: we should have a watchdog to check if the user is still authenticated
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Routes>

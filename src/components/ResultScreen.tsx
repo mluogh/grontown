@@ -1,6 +1,5 @@
 import {
   AspectRatio,
-  Image,
   Center,
   Heading,
   Text,
