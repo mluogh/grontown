@@ -118,9 +118,9 @@ export const Login = () => {
             </VStack>
           </Stack>
         </Box>
-        <AspectRatio flex="4" ratio={3 / 2}>
+        <AspectRatio flex="4" ratio={1350 / 1150}>
           <video autoPlay loop muted style={{ width: "100%", height: "100%" }}>
-            <source src="/assets/web/gron_games.webm" type="video/webm" />
+            <source src="/assets/web/gameplay.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </AspectRatio>

@@ -47,7 +47,6 @@ const AppRoutes = () => {
           console.error("Failed to check authentication", error);
         }
       }
-
       checkAuthentication();
     }
     // TODO: we should have a watchdog to check if the user is still authenticated

@@ -58,6 +58,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/pubsub-js": "^1.8.3",
     "openapi-typescript-codegen": "^0.25.0"
   }
