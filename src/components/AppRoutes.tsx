@@ -2,23 +2,13 @@ import { useState, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { GameManager } from "components/GameManager";
 import Login from "components/Login";
-import { EastworldClient } from "eastworld-client";
+import { ApiError, EastworldClient } from "eastworld-client";
 
-const RedirectToLogin = () => {
+const RedirectToHome = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
     navigate("/");
-  }, [navigate]);
-
-  return null;
-};
-
-const RedirectToGame = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    navigate("/game");
   }, [navigate]);
 
   return null;
@@ -43,12 +33,13 @@ const AppRoutes = () => {
         try {
           await eastworldClient.authorization.check();
           setAuthStatus(AuthStatus.Authenticated);
-          navigate("/game");
+          navigate("/");
         } catch (error) {
-          if (error instanceof Error && error?.message === "Unauthorized") {
-            setAuthStatus(AuthStatus.NotAuthenticated);
-            navigate("/");
+          if (!(error instanceof ApiError && error?.status === 401)) {
+            console.error("Failed to check authentication", error);
           }
+          setAuthStatus(AuthStatus.NotAuthenticated);
+          navigate("/");
         }
       }
 
@@ -67,7 +58,7 @@ const AppRoutes = () => {
             case AuthStatus.NotAuthenticated:
               return <Login />;
             case AuthStatus.Authenticated:
-              return <RedirectToGame />;
+              return <GameManager />;
             case AuthStatus.Pending:
               return <></>;
             default:
@@ -75,27 +66,7 @@ const AppRoutes = () => {
           }
         })()}
       ></Route>
-      <Route
-        path="/game"
-        element={
-          authStatus === AuthStatus.Authenticated ? (
-            <GameManager />
-          ) : (
-            <RedirectToLogin />
-          )
-        }
-      />
-      <Route
-        path="*"
-        element={
-          authStatus === AuthStatus.Authenticated ? (
-            <RedirectToGame />
-          ) : (
-            <RedirectToLogin />
-          )
-        }
-      />{" "}
-      {/* Catch-all route */}
+      <Route path="*" element={<RedirectToHome />} /> {/* Catch-all route */}
     </Routes>
   );
 };
