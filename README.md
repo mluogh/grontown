@@ -1,59 +1,54 @@
-This project was bootstrapped with
-[Create React App](https://github.com/facebook/create-react-app).
+<!-- <video autoplay loop style="width:100%; height: auto; position:absolute; z-index: -1;">
+  <source src="public/assets/web/gameplay.mp4" />
+</video> -->
 
-## Available Scripts
+## nob hill noir
 
-In the project directory, you can run:
+An open-world murder mystery.
 
-### `npm start`
+This game serves mostly as a demo and a playground for the development of our
+[open-source game agent framework - eastworld](https://github.com/mluogh/eastworld).
 
-Runs the app in the development mode.<br /> Open
-[http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Playing Locally
 
-The page will reload if you make edits.<br /> You will also see any lint errors
-in the console.
+#### Install backend
 
-### `npm test`
+If you want to run this locally, you will need to run
+[eastworld](https://github.com/mluogh/eastworld).
 
-Launches the test runner in the interactive watch mode.<br /> See the section
-about
-[running tests](https://facebook.github.io/create-react-app/docs/running-tests)
-for more information.
+Abbreviated eastworld install for MacOS:
 
-### `npm run build`
+```
 
-Builds the app for production to the `build` folder.<br /> It correctly bundles
-React in production mode and optimizes the build for the best performance.
+$ brew install redis pdm node
 
-The build is minified and the filenames include the hashes.<br /> Your app is
-ready to be deployed!
+$ git clone git@github.com:mluogh/eastworld.git
 
-See the section about
-[deployment](https://facebook.github.io/create-react-app/docs/deployment) for
-more information.
+$ cd eastworld && pdm install
 
-### `npm run eject`
+$ cp example_config.ini config.ini
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+*** put your OpenAI key or configure local LLM  in config.ini ***
 
-If you aren’t satisfied with the build tool and configuration choices, you can
-`eject` at any time. This command will remove the single build dependency from
-your project.
+$ redis-server
 
-Instead, it will copy all the configuration files and the transitive
-dependencies (webpack, Babel, ESLint, etc) right into your project so you have
-full control over them. All of the commands except `eject` will still work, but
-they will point to the copied scripts so you can tweak them. At this point
-you’re on your own.
+$ pdm run uvicorn server.main:app --reload
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for
-small and middle deployments, and you shouldn’t feel obligated to use this
-feature. However we understand that this tool wouldn’t be useful if you couldn’t
-customize it when you are ready for it.
+See
+[eastworld install instructions](https://github.com/mluogh/eastworld#installation)
+for other operating systems.
 
-## Learn More
+#### Install the game
 
-You can learn more in the
-[Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+$ git clone git@github.com:mluogh/grontown.git
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+$ cd grontown
+
+$ npm install
+
+$ npm start
+```
+
+Play at http://localhost:3000
