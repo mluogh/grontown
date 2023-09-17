@@ -47,7 +47,7 @@ const AppRoutes = () => {
           console.error("Failed to check authentication", error);
         }
       }
-      // checkAuthentication();
+      checkAuthentication();
     }
     // TODO: we should have a watchdog to check if the user is still authenticated
     // eslint-disable-next-line react-hooks/exhaustive-deps
