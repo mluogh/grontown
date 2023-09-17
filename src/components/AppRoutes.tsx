@@ -24,27 +24,31 @@ const RedirectToGame = () => {
   return null;
 };
 
+enum AuthStatus {
+  NotAuthenticated = "NotAuthenticated",
+  Authenticated = "Authenticated",
+  Pending = "Pending",
+}
+
 const AppRoutes = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [authStatus, setAuthStatus] = useState<AuthStatus>(AuthStatus.Pending);
   const navigate = useNavigate();
   const eastworldClient = new EastworldClient({
     BASE: "/api",
   });
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (authStatus !== AuthStatus.Authenticated) {
       async function checkAuthentication() {
         try {
-          const response = await eastworldClient.authorization.check();
-          if (response.isAuthenticated) {
-            setIsAuthenticated(true);
-            navigate("/game");
-          } else {
-            setIsAuthenticated(false);
+          await eastworldClient.authorization.check();
+          setAuthStatus(AuthStatus.Authenticated);
+          navigate("/game");
+        } catch (error) {
+          if (error instanceof Error && error?.message === "Unauthorized") {
+            setAuthStatus(AuthStatus.NotAuthenticated);
             navigate("/");
           }
-        } catch (error) {
-          console.error("Failed to check authentication", error);
         }
       }
 
@@ -58,15 +62,38 @@ const AppRoutes = () => {
     <Routes>
       <Route
         path="/"
-        element={!isAuthenticated ? <Login /> : <RedirectToGame />}
+        element={(() => {
+          switch (authStatus) {
+            case AuthStatus.NotAuthenticated:
+              return <Login />;
+            case AuthStatus.Authenticated:
+              return <RedirectToGame />;
+            case AuthStatus.Pending:
+              return <></>;
+            default:
+              return null;
+          }
+        })()}
       ></Route>
       <Route
         path="/game"
-        element={isAuthenticated ? <GameManager /> : <RedirectToLogin />}
+        element={
+          authStatus === AuthStatus.Authenticated ? (
+            <GameManager />
+          ) : (
+            <RedirectToLogin />
+          )
+        }
       />
       <Route
         path="*"
-        element={isAuthenticated ? <RedirectToGame /> : <RedirectToLogin />}
+        element={
+          authStatus === AuthStatus.Authenticated ? (
+            <RedirectToGame />
+          ) : (
+            <RedirectToLogin />
+          )
+        }
       />{" "}
       {/* Catch-all route */}
     </Routes>
