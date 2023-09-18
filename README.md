@@ -10,6 +10,7 @@ This game serves mostly as a demo and a playground for the development of our
 [open-source game agent framework - eastworld](https://github.com/mluogh/eastworld).
 
 This game is available at [gron.games](https://www.gron.games)
+
 ### Playing Locally
 
 #### Install backend
