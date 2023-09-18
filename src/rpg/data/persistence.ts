@@ -3,6 +3,7 @@ enum StorageKeys {
   Notes = "Notes",
   NonInteractableNpcs = "NonInteractable",
   GoneNpcs = "GoneNpcs",
+  SessionUuid = "SessionUuid",
 }
 
 export type SaveGame = {
@@ -10,6 +11,7 @@ export type SaveGame = {
   foundEvidence: Set<string>;
   nonInteractableNpcs: Set<string>;
   goneNpcs: Set<string>;
+  sessionUuid: string;
 };
 
 // Ah this is probably kind of bad
@@ -24,6 +26,7 @@ let gameState: SaveGame = {
   goneNpcs: new Set(
     JSON.parse(localStorage.getItem(StorageKeys.GoneNpcs) || "[]"),
   ),
+  sessionUuid: localStorage.getItem(StorageKeys.SessionUuid) || "",
 };
 
 export const getGameState = (): SaveGame => gameState;
@@ -42,6 +45,7 @@ export const saveGameState = () => {
     StorageKeys.GoneNpcs,
     JSON.stringify(Array.from(gameState.goneNpcs)),
   );
+  localStorage.setItem(StorageKeys.SessionUuid, gameState.sessionUuid);
 };
 
 export const resetGameState = () => {
@@ -50,6 +54,7 @@ export const resetGameState = () => {
     foundEvidence: new Set(),
     nonInteractableNpcs: new Set(),
     goneNpcs: new Set(),
+    sessionUuid: "",
   };
   for (const key of Object.values(StorageKeys)) {
     localStorage.removeItem(key);

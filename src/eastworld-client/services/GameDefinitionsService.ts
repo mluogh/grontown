@@ -16,15 +16,20 @@ export class GameDefinitionsService {
     /**
      * Create Game Def
      * @param gameName
+     * @param password
      * @returns GameDef Successful Response
      * @throws ApiError
      */
     public createGame(
         gameName: string,
+        password?: string,
     ): CancelablePromise<GameDef> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/game/create',
+            headers: {
+                'password': password,
+            },
             query: {
                 'game_name': gameName,
             },
@@ -70,17 +75,22 @@ export class GameDefinitionsService {
     /**
      * Delete Game Def
      * @param uuid
+     * @param password
      * @returns any Successful Response
      * @throws ApiError
      */
     public deleteGame(
         uuid: string,
+        password?: string,
     ): CancelablePromise<any> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/game/{uuid}',
             path: {
                 'uuid': uuid,
+            },
+            headers: {
+                'password': password,
             },
             errors: {
                 422: `Validation Error`,
@@ -133,15 +143,20 @@ export class GameDefinitionsService {
     /**
      * Update Game Def Json
      * @param jsonedGame
+     * @param password
      * @returns any Successful Response
      * @throws ApiError
      */
     public createGameJson(
         jsonedGame: string,
+        password?: string,
     ): CancelablePromise<any> {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/game/json',
+            headers: {
+                'password': password,
+            },
             query: {
                 'jsoned_game': jsonedGame,
             },
@@ -156,6 +171,7 @@ export class GameDefinitionsService {
      * @param uuid
      * @param requestBody
      * @param overwriteAgents
+     * @param password
      * @returns GameDef Successful Response
      * @throws ApiError
      */
@@ -163,12 +179,16 @@ export class GameDefinitionsService {
         uuid: string,
         requestBody: GameDef,
         overwriteAgents: boolean = false,
+        password?: string,
     ): CancelablePromise<GameDef> {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/game/{uuid}/update',
             path: {
                 'uuid': uuid,
+            },
+            headers: {
+                'password': password,
             },
             query: {
                 'overwrite_agents': overwriteAgents,
