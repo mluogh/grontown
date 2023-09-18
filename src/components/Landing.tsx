@@ -6,18 +6,28 @@ import {
   Text,
   AspectRatio,
   Stack,
+  Button,
 } from "@chakra-ui/react";
 import GoogleButton from "react-google-button";
 import GithubButton from "react-github-login-button";
 import { BrowserView, MobileView } from "react-device-detect";
+import { AuthStatus } from "./util/auth";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 
-export const Login = () => {
+interface LandingProps {
+  authStatus: AuthStatus;
+}
+
+export const Landing = (props: LandingProps) => {
+  const navigate = useNavigate();
+
   const handleGitHubLogin = async () => {
     // Define the URI to which you want the server to redirect after successful authentication
     const clientRedirectURI = `${window.location.origin}`;
 
     // Construct the authorization URL with the client_redirect_uri parameter
-    const authorizeURL = `/api/auth/github_authorize?client_redirect_uri=${clientRedirectURI}`;
+    const authorizeURL = `/api/auth/github_authorize?client_redirect_uri=${clientRedirectURI}/game`;
 
     // Redirect to the constructed URL
     window.location.href = authorizeURL;
@@ -27,11 +37,15 @@ export const Login = () => {
     const clientRedirectURI = `${window.location.origin}`;
 
     // Construct the authorization URL with the client_redirect_uri parameter
-    const authorizeURL = `/api/auth/google_authorize?client_redirect_uri=${clientRedirectURI}`;
+    const authorizeURL = `/api/auth/google_authorize?client_redirect_uri=${clientRedirectURI}/game`;
 
     // Redirect to the constructed URL
     window.location.href = authorizeURL;
   };
+
+  if (props.authStatus === AuthStatus.Pending) {
+    return <></>;
+  }
 
   return (
     <Center height="100vh" width="100vw">
@@ -101,12 +115,27 @@ export const Login = () => {
                   marginBottom={3}
                 >
                   <BrowserView>
-                    <GithubButton onClick={handleGitHubLogin}>
-                      Sign in with GitHub
-                    </GithubButton>
-                    <GoogleButton onClick={handleGoogleLogin}>
-                      Sign in with Google
-                    </GoogleButton>
+                    {props.authStatus === AuthStatus.NotAuthenticated && (
+                      <>
+                        <GithubButton onClick={handleGitHubLogin}>
+                          Sign in with GitHub
+                        </GithubButton>
+                        <GoogleButton onClick={handleGoogleLogin}>
+                          Sign in with Google
+                        </GoogleButton>
+                      </>
+                    )}
+                    {props.authStatus === AuthStatus.Authenticated && (
+                      <Button
+                        width="100%"
+                        size="lg"
+                        colorScheme="green"
+                        rightIcon={<ArrowForwardIcon />}
+                        onClick={() => navigate("/game")}
+                      >
+                        Start
+                      </Button>
+                    )}
                   </BrowserView>
                   <MobileView>
                     <Text fontSize={"2xl"}>
@@ -135,4 +164,4 @@ export const Login = () => {
   );
 };
 
-export default Login;
+export default Landing;
