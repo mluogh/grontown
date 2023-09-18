@@ -53,7 +53,10 @@ export const Login = () => {
           boxShadow="xl"
           flex="1"
         >
-          <Stack height="100%" direction={{ base: "row", xl: "column" }}>
+          <VStack
+            height="100%"
+            // direction={{ base: "row", xl: "column" }}
+          >
             <VStack
               spacing={{ base: "2", xl: "4" }}
               flex="1"
@@ -137,7 +140,7 @@ export const Login = () => {
                 GitHub
               </Button>
             </Center>
-          </Stack>
+          </VStack>
         </Box>
         <AspectRatio flex="4" ratio={1350 / 1150}>
           <video autoPlay loop muted style={{ width: "100%", height: "100%" }}>
