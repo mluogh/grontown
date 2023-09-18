@@ -75,6 +75,27 @@ export class GameSessionsService {
     }
 
     /**
+     * Is Session Active
+     * @param sessionUuid
+     * @returns boolean Successful Response
+     * @throws ApiError
+     */
+    public isSessionActive(
+        sessionUuid: string,
+    ): CancelablePromise<boolean> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/session/{session_uuid}/active',
+            path: {
+                'session_uuid': sessionUuid,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+
+    /**
      * Start Conversation
      * Starts a chat with the given agent. Clears previous conversation
      * history.

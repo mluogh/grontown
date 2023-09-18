@@ -40,9 +40,7 @@ export const GameManager = () => {
       const gameUuid = "5dcd12ef-7489-4d5e-9ce1-202451fd1c5f";
       if (
         !sessionUuid ||
-        (await eastworldClient.gameSessions.listSessions(gameUuid)).includes(
-          sessionUuid,
-        )
+        !(await eastworldClient.gameSessions.isSessionActive(sessionUuid))
       ) {
         sessionUuid = await eastworldClient.gameSessions.createSession(
           gameUuid,
