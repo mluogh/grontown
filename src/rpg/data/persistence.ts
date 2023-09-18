@@ -54,7 +54,7 @@ export const resetGameState = () => {
     foundEvidence: new Set(),
     nonInteractableNpcs: new Set(),
     goneNpcs: new Set(),
-    sessionUuid: ""
+    sessionUuid: "",
   };
   for (const key of Object.values(StorageKeys)) {
     localStorage.removeItem(key);
