@@ -4,7 +4,11 @@
   <a href="https://discord.gg/9V5URE9f4T">💬 Get help on discord</a>
 </p>
 
-https://github.com/mluogh/grontown/assets/8098155/cfa2b06c-b471-4b59-abe9-d2d231eac1de
+
+
+https://github.com/mluogh/grontown/assets/8098155/a5cba373-ebbf-461d-bbd0-bc81d077a0e5
+
+
 
 This game serves mostly as a demo and a playground for the development of our
 [open-source game agent framework - eastworld](https://github.com/mluogh/eastworld).
