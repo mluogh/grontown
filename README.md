@@ -4,6 +4,13 @@
 
 ## nob hill noir
 
+<p align="center">
+  <a href="https://discord.gg/9V5URE9f4T">💬 Get help on discord</a>
+</p>
+
+https://github.com/mluogh/grontown/assets/8098155/05f6b180-8933-4453-87cb-70cd4890eff4
+
+
 An open-world murder mystery.
 
 This game serves mostly as a demo and a playground for the development of our
