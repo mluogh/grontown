@@ -51,6 +51,7 @@ export const Landing = (props: LandingProps) => {
     <Center height="100vh" width="100vw">
       <Stack
         width="85vw"
+        maxWidth={"1700px"}
         alignItems="stretch"
         borderRadius="xl"
         overflow="hidden"
@@ -65,7 +66,10 @@ export const Landing = (props: LandingProps) => {
           boxShadow="xl"
           flex="1"
         >
-          <Stack height="100%" direction={{ base: "row", xl: "column" }}>
+          <VStack
+            height="100%"
+            // direction={{ base: "row", xl: "column" }}
+          >
             <VStack
               spacing={{ base: "2", xl: "4" }}
               flex="1"
@@ -145,7 +149,26 @@ export const Landing = (props: LandingProps) => {
                 </VStack>
               </Box>
             </VStack>
-          </Stack>
+            <Center>
+              <Button
+                as="a"
+                href="https://www.github.com/mluogh/grontown"
+                target="_blank"
+                rel="noopener noreferrer"
+                leftIcon={
+                  <Image
+                    src="/assets/web/github-mark.png"
+                    height={{ base: "20px", xl: "30px" }}
+                  />
+                }
+                size={{ base: "xs", xl: "sm" }}
+                bg={"white"}
+                textColor={"black"}
+              >
+                GitHub
+              </Button>
+            </Center>
+          </VStack>
         </Box>
         <AspectRatio flex="4" ratio={1350 / 1150}>
           <video
