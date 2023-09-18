@@ -36,11 +36,15 @@ export const GameManager = () => {
 
   useEffect(() => {
     const fetchSession = async () => {
-      setSessionId(
-        await eastworldClient.gameSessions.createSession(
+      var sessionUuid = getGameState().sessionUuid;
+      if (sessionUuid.length === 0) {
+        sessionUuid = await eastworldClient.gameSessions.createSession(
           "5dcd12ef-7489-4d5e-9ce1-202451fd1c5f",
-        ),
-      );
+        );
+        getGameState().sessionUuid = sessionUuid;
+        saveGameState();
+      }
+      setSessionId(sessionUuid);
     };
     initGA();
     logStartGame();
