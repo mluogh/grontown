@@ -1,11 +1,10 @@
 <h1 align="center">nob hill noir</h1>
-<h3 align="center">a large language murder mystery</h3>
 
 <p align="center">
   <a href="https://discord.gg/9V5URE9f4T">💬 Get help on discord</a>
 </p>
 
-https://github.com/mluogh/grontown/assets/8098155/05f6b180-8933-4453-87cb-70cd4890eff4
+https://github.com/mluogh/grontown/assets/8098155/cfa2b06c-b471-4b59-abe9-d2d231eac1de
 
 This game serves mostly as a demo and a playground for the development of our
 [open-source game agent framework - eastworld](https://github.com/mluogh/eastworld).
