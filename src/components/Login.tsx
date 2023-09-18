@@ -6,6 +6,8 @@ import {
   Text,
   AspectRatio,
   Stack,
+  IconButton,
+  Button,
 } from "@chakra-ui/react";
 import GoogleButton from "react-google-button";
 import GithubButton from "react-github-login-button";
@@ -37,6 +39,7 @@ export const Login = () => {
     <Center height="100vh" width="100vw">
       <Stack
         width="85vw"
+        maxWidth={"1700px"}
         alignItems="stretch"
         borderRadius="xl"
         overflow="hidden"
@@ -116,6 +119,25 @@ export const Login = () => {
                 </VStack>
               </Box>
             </VStack>
+            <Center>
+              <Button
+                as="a"
+                href="https://www.github.com/mluogh/grontown"
+                target="_blank"
+                rel="noopener noreferrer"
+                leftIcon={
+                  <Image
+                    src="/assets/web/github-mark.png"
+                    height={{ base: "20px", xl: "30px" }}
+                  />
+                }
+                size={{ base: "xs", xl: "sm" }}
+                bg={"white"}
+                textColor={"black"}
+              >
+                GitHub
+              </Button>
+            </Center>
           </Stack>
         </Box>
         <AspectRatio flex="4" ratio={1350 / 1150}>
