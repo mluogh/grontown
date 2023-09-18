@@ -6,7 +6,6 @@ import {
   Text,
   AspectRatio,
   Stack,
-  IconButton,
   Button,
 } from "@chakra-ui/react";
 import GoogleButton from "react-google-button";
