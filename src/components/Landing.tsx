@@ -50,7 +50,7 @@ export const Landing = (props: LandingProps) => {
   return (
     <Center height="100vh" width="100vw">
       <Stack
-        width="85vw"
+        width="80vw"
         maxWidth={"1700px"}
         alignItems="stretch"
         borderRadius="xl"
@@ -66,10 +66,7 @@ export const Landing = (props: LandingProps) => {
           boxShadow="xl"
           flex="1"
         >
-          <VStack
-            height="100%"
-            // direction={{ base: "row", xl: "column" }}
-          >
+          <VStack height="100%">
             <VStack
               spacing={{ base: "2", xl: "4" }}
               flex="1"

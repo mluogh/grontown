@@ -177,6 +177,7 @@ export default class Main extends Phaser.Scene {
     if (isProduction) {
       return;
     }
+    this.physics.world.debugGraphic.visible = false;
     this.input.keyboard!.on("keydown-G", () => {
       this.physics.world.debugGraphic.visible =
         !this.physics.world.debugGraphic.visible;
