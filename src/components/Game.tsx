@@ -26,7 +26,7 @@ export const Game = () => {
       physics: {
         default: "arcade",
         arcade: {
-          debug: true,
+          debug: isDevelopment,
         },
       },
       disableContextMenu: isProduction,
